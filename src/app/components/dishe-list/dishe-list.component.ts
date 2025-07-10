@@ -20,9 +20,9 @@ export class DisheListComponent {
   constructor(
     private dishesService: DishesService,
     private storsgeIcon: Storage,
-     public dialog: MatDialog,
- 
-  ) {}
+    public dialog: MatDialog,
+
+  ) { }
 
   ngOnInit(): void {
     this.getDishes();
@@ -31,7 +31,6 @@ export class DisheListComponent {
   // Отримання даних з сервера
   getDishes(): void {
     this.dishesService.getAll().subscribe((data: any) => {
-      console.log(data);
       this.dishes = data as DishesResponse[];
     });
   }
@@ -58,7 +57,7 @@ export class DisheListComponent {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-         this.getDishes();
+      this.getDishes();
     });
   }
 }

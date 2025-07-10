@@ -205,8 +205,6 @@ export class RecipesService {
         matchedRecipes.push({ id: recipeId, ...recipeData });
       }
     });
-
-    console.log('Matched Recipes:', matchedRecipes);
     return matchedRecipes;
   }
 
@@ -255,15 +253,14 @@ export class RecipesService {
       if (docSnap.exists()) {
         const dishesArray = docSnap.data()?.['dishes'] || [];
 
-        console.log(dishesArray);
 
         if (dishesArray.id === 'hszE9T3DZUpP8SpkV4b2') {
           dishesArray.id = '4MCFaem0AFHOcC65nqMX'
-          console.log(dishesArray);
+
         }
 
         await updateDoc(docRef, { dishes: dishesArray });
-        console.log(`Updated document ${document.id}`);
+
       }
 
 

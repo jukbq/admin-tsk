@@ -58,6 +58,8 @@ export class ListCategoriesComponent {
       this.filterCategoriesDishes = this.categoriesDishes.filter((dish) =>
         dishesid.includes(dish.dishes.id)
       );
+
+
       this.filterCategoriesDishes.sort((a, b) =>
         a.categoryName.localeCompare(b.categoryName)
       );
@@ -69,6 +71,8 @@ export class ListCategoriesComponent {
   getCategories(): void {
     this.categoriesDishesService.getAll().subscribe((data: any) => {
       this.categoriesDishes = data as CategoriesResponse[];
+
+
       this.categoriesDishes.sort((a, b) =>
         a.categoryName.localeCompare(b.categoryName)
       );
@@ -77,7 +81,7 @@ export class ListCategoriesComponent {
 
   // Видалення категорію
   delCategori(index: CategoriesResponse) {
-    console.log(index);
+
 
 
     if (index.image) {

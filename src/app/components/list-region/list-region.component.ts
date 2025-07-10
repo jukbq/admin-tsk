@@ -80,8 +80,6 @@ export class ListRegionComponent {
     this.cuisineService.getAllRegiom().subscribe((data: any) => {
       this.region = data as RegionResponse[];
       this.filterRegion = [...this.region]; // Спочатку всі продукти
-      console.log(this.region);
-
     });
   }
 

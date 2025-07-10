@@ -266,8 +266,6 @@ export class AddIngredientsComponent {
   }
 
   editIngredent(i: any, j: any) {
-    console.log(i, j);
-
     const ingredientToEdit = this.ingredients[i];
     const product = ingredientToEdit.group;
     this.selectedCategory = product[j].selectedProduct.
@@ -277,8 +275,6 @@ export class AddIngredientsComponent {
     this.group.unitsMeasure = product[j].unitsMeasure
     this.group.notes = product[j].notes
     this.group.productId = product[j].selectedProduct.id
-    console.log(ingredientToEdit);
-    console.log(product[j]);
 
     /*   if (this.ingredients[i]) {
            this.productId = ingredientToEdit.ingredientId;

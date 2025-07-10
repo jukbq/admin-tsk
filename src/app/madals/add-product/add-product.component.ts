@@ -119,7 +119,7 @@ export class AddProductComponent {
       recipeName: recipeData.recipeTitle
 
     });
-    console.log(this.productsForm.value);
+
 
 
 
@@ -159,7 +159,7 @@ export class AddProductComponent {
                   articleList: updatedProductData.articleList,
                 };
 
-                console.log(groupItem.selectedProduct);
+
 
               }
             });
@@ -187,7 +187,7 @@ export class AddProductComponent {
     const file = event.target.files[0];
     const previousImageURL = this.productsImages; // Поточне зображення
     const task = ref(this.storsgeIcon, previousImageURL);
-    console.log(previousImageURL);
+
 
 
     // Видалення попереднього зображення, якщо воно існує в Firebase Storage

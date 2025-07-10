@@ -149,13 +149,12 @@ export class AddRecipeComponent {
     this.route.queryParams.subscribe((params) => {
       const action = params['action'];
       const object = params['object'] ? JSON.parse(params['object']) : null;
-      console.log(action);
-      console.log(object);
+
 
       if (action === 'edit' && object) {
         this.edit_status = true;
         this.editRecipe(object);
-        console.log(object);
+
 
       }
     });
@@ -419,7 +418,7 @@ export class AddRecipeComponent {
       videoUrl: recipe.videoUrl,
       advice: recipe.advice,
     });
-    console.log(this.recipesForm.value);
+
 
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;

@@ -87,12 +87,8 @@ export class CategoriesService {
   }
 
   delCategories(id: any) {
-    console.log(id);
-
     const categoriesDocumentReference = doc(this.afs, `categoriesDishes/${id}`);
     return deleteDoc(categoriesDocumentReference);
-
-
   }
 
   // Перевірка наявності користувача в локальному сховищі

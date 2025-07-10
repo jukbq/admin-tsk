@@ -28,7 +28,7 @@
         <tbody *ngIf="!filter">
             <tr *ngFor="let categori of categoriesDishes; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ categori.categoryIndex}}</td>
+                <td>{{ categori.id}}</td>
                 <td>{{categori.dishes.dishesName}}</td>
                 <td>{{categori.categoryName }}</td>
                 <td class="image">
@@ -45,7 +45,7 @@
         <tbody *ngIf="filter">
             <tr *ngFor="let categori of filterCategoriesDishes; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ categori.categoryIndex}}</td>
+                <td>{{ categori.id}}</td>
                 <td>{{categori.dishes.dishesName}}</td>
                 <td>{{categori.categoryName }}</td>
                 <td class="image">
