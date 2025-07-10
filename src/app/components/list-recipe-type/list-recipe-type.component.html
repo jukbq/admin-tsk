@@ -1,0 +1,35 @@
+<section>
+
+    <h2>тип рецепта</h2>
+
+    <button class="btn" type="button" (click)="addModal('add', 0)">
+        ДОДАТИ
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Назва</th>
+                <th scope="col">Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let recipeType of recipeType; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{recipeType.recipeTypeName}}</td>
+                <td class="image">
+                    <img [src]="recipeType.image" />
+                </td>
+                <td class="btn_tr">
+                    <div class="edit button" (click)="addModal('edit',recipeType)"></div>
+                    <div class="dell button" (click)="delRecipeType(recipeType)"></div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</section>

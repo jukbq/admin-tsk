@@ -1,0 +1,30 @@
+<section>
+    <h2>Категорії продуктів</h2>
+
+    <button class="btn" type="button" (click)="addModal('add', 0)">
+        ДОДАТИ КАТЕГОРІЮ ПРОДУКТІВ
+    </button>
+
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Назва</th>
+                    <th scope="col">Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of productsCategories; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ category.productCategoryName}}</td>
+                    <td class="btn_tr">
+                        <div class="edit button" (click)="addModal('edit',category)"></div>
+                        <div class="dell button" (click)="delCategory(category)"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>

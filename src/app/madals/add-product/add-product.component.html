@@ -1,0 +1,79 @@
+<section>
+    <div class="close" (click)="close()" aria-label="Закрити"></div>
+
+    <h2>Додати продукти</h2>
+
+    <form [formGroup]="productsForm" (ngSubmit)="creatProducts()" class="form_container">
+
+        <div class="input_section" style="justify-content: space-around; align-items: center;">
+            <div class="data_block content_block">
+
+                <select formControlName="productsCategory" [compareWith]="compareFn" name="productsCategory"
+                    class="form-select">
+                    <option [ngValue]="item" *ngFor="let item of productsCategories">
+                        {{ item.productCategoryName }}
+                    </option>
+                </select>
+
+
+                <input formControlName="productsName" type="text" name="productsName" class="form-control"
+                    placeholder="*Назва" aria-label="Назва" />
+                <div class="recipe_select">
+                    <h3>Вибір страви</h3>
+                    <input formControlName="recipeName" type="text" [(ngModel)]="query" (input)="onSearch()"
+                        placeholder="Пошук рецептів..." class="search-input" />
+                    <ul *ngIf="searchResults.length > 0" class="recipes_list">
+                        @for (recipeList of searchResults; track recipeList) {
+                        <li class="recipe_card">
+                            <div class="recipe_name">
+                                <p (click)="selectRecipe(recipeList)">
+                                    {{recipeList.recipeTitle}}
+                                </p>
+                            </div>
+
+                        </li>
+                        }
+
+                    </ul>
+                </div>
+
+
+                <label for="number">Кількість калорій</label>
+                <input formControlName="productsCalories" type="number" name="productsCalories" class="form-control"
+                    placeholder="*Калорії" aria-label="Калорії" />
+            </div>
+
+
+            <div class="data_block image_block">
+                <div class="progress_line">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                            aria-label="Default striped example" [style.width.%]="uploadPercent" aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+
+                <div class="image_field">
+                    <td *ngIf="productsImages" class="image">
+                        <img src="{{productsImages}}" alt="">
+                    </td>
+
+                    <input #fileInput type="file" style="display: none;" (change)="uploadImage($event)"
+                        accept="image/*" />
+                    <button class="overlay btn" type="button" (click)="fileInput.click()">Змінити зображення</button>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="batton_section">
+            <button type="submit" class="btn">
+                Зберегти
+            </button>
+        </div>
+
+    </form>
+
+</section>

@@ -1,0 +1,41 @@
+<section>
+
+
+
+    <div class="open" [ngClass]="{ 'close': close === false }" (click)="openMenu()"></div>
+
+    <div class="menu_list" [ngClass]="{ 'close': close === false }">
+        <!--  <div class="authentication" [ngClass]="{ 'logout': logout === false }" (click)="authentication()"></div>> -->
+        <ul class="admin_menu">
+            @for(menuItem of list; track menuItem; let i = $index){
+            <ng-container>
+                <li class="head_li" [ngClass]="{ 'active': i === activeItem }" (click)="onSelectItem(i)">
+                    <div *ngIf="menuItem.link !== '#'" [routerLink]="menuItem.link" class="text">
+                        <p class="nav-link">{{menuItem.name}}</p>
+                    </div>
+                    <div *ngIf="menuItem.link === '#'" class="text">
+                        <p class="nav-link">{{menuItem.name}}</p>
+                        <div class="batton"></div>
+                    </div>
+                    <ng-container *ngIf="menuItem.subItems">
+                        <ul class="submenu">
+                            <li class="sub_li" *ngFor="let subItem of menuItem.subItems; let j = index"
+                                [ngClass]="{ 'active':  j === activeSubItem }" [routerLink]="subItem.link"
+                                (click)="onSelectSubItem(subItem.link,j)">
+                                <div class="submenu_text">
+                                    <p class="nav-link">{{subItem.name}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </ng-container>
+                </li>
+            </ng-container>
+            }
+
+        </ul>
+    </div>
+
+
+    <router-outlet class="dmin_block"></router-outlet>
+
+</section>

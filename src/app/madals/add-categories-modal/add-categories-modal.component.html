@@ -1,0 +1,80 @@
+<section>
+  <div class="close" (click)="close()" aria-label="Закрити"></div>
+
+  <div class="title">Додати категорію</div>
+
+  <input type="text" [(ngModel)]="slug" (input)="slugValid()" name="slug" class="form-control slug"
+    placeholder="*Посилання" aria-label="Посилання" [ngClass]="{
+      'is-valid': slugExists === false,
+      'is-invalid': slugExists === true
+    }" />
+
+  <form [formGroup]="categoriesDishesForm" (ngSubmit)="creatCategories()" class="form_container">
+    <div class="input_section">
+      <div class="data_block content_block">
+        <select formControlName="dishes" [compareWith]="compareFn" name="dishes" class="form-select">
+          <option [ngValue]="menu" *ngFor="let menu of dishes">
+            {{ menu.dishesName }}
+          </option>
+        </select>
+
+        <input formControlName="categoryIndex" type="number" name="categoryIndex" class="form-control"
+          placeholder="*Порядок категорії" aria-label="Порядок категорії" />
+        <input formControlName="categoryName" type="text" name="categoryName" class="form-control" placeholder="*Назва"
+          aria-label="Назва" />
+
+        <div class="input">
+          <editor apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+            [init]="{ plugins: 'lists link image table code help wordcount' }" [inline]="false"
+            formControlName="categoryDescription"
+            toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help">
+          </editor>
+        </div>
+      </div>
+
+      <div class="data_block seo_block">
+        <h3>SEO</h3>
+        <input formControlName="seoCategoryName" type="text" name="seoCategoryName" class="form-control"
+          placeholder="*Назва" aria-seoname="OG Назва" />
+        <textarea formControlName="seoCategoryDescription" name="seoCategoryDescription" id="" cols="30" rows="10"
+          class="form-control dishDescription" placeholder="SEO опис"></textarea>
+        <textarea class="form-control keywords" placeholder="Ключові слова" formControlName="keywords" name="keywords"
+          id=""></textarea>
+      </div>
+
+      <div class="data_block image_block">
+        <div class="progress_line">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped" role="progressbar" aria-label="Default striped example"
+              [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+
+        <div class="image_field">
+          <td *ngIf="categoryImage" class="image">
+            <img src="{{ categoryImage }}" alt="" />
+          </td>
+
+          <input #fileInput type="file" style="display: none" (change)="uploadUserImage($event)" accept="image/*" />
+          <button class="overlay btn" type="button" (click)="fileInput.click()">
+            Змінити зображення
+          </button>
+        </div>
+
+        <div class="image_field">
+          <td *ngIf="additionalImage" class="image">
+            <img src="{{ additionalImage }}" alt="" />
+          </td>
+          <input #fileInputAdditional type="file" style="display: none" (change)="uploadUserImage($event, 'additional')"
+            accept="image/*" />
+          <button class="overlay btn" type="button" (click)="fileInputAdditional.click()">
+            Змінити додаткове зображення
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="batton_section">
+      <button type="submit" class="btn">Зберегти</button>
+    </div>
+  </form>
+</section>

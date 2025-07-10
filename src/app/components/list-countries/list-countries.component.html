@@ -1,0 +1,34 @@
+<section>
+
+    <h2>Кухня</h2>
+
+    <button class="btn" type="button" (click)="addModal('add', 0)">
+        ДОДАТИ
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Назва</th>
+                <th scope="col">Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cuisine of cuisine; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{cuisine.cuisineName}}</td>
+                <td class="image">
+                    <img [src]="cuisine.image" />
+                </td>
+                <td class="btn_tr">
+                    <div class="edit button" (click)="addModal('edit',cuisine)"></div>
+                    <div class="dell button" (click)="delCuisine(cuisine)"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</section>

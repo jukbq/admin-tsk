@@ -1,0 +1,36 @@
+<section>
+
+    <h2>Інструменти</h2>
+
+    <button class="btn" (click)="addModal('add', 0)" type="button">
+        ДОДАТИ
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Назва</th>
+                <th scope="col">Картинка</th>
+                <th scope="col">Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tools of tools; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{tools.toolsName}}</td>
+
+                <td class="image">
+                    <img [src]="tools.image" />
+                </td>
+                <td class="btn_tr">
+                    <div class="edit button" (click)="addModal('edit',tools)"></div>
+                    <div class="dell button" (click)="delTools(tools)"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</section>

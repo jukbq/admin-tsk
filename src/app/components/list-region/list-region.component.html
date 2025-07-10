@@ -1,0 +1,83 @@
+<section>
+  <h2>Регіони</h2>
+
+  <button class="btn" type="button" (click)="addModal('add', 0)">
+    ДОДАТИ РЕГІОН
+  </button>
+
+  <div class="table">
+    <div class="filter">
+      <div class="dropdown" [ngClass]="{ show: isDropdownOpen }">
+        <button
+          class="btn dropdown-toggle"
+          type="button"
+          (click)="toggleDropdown()"
+        >
+          Обрати категорії
+        </button>
+        <div class="dropdown-menu" [ngClass]="{ show: isDropdownOpen }">
+          <div class="dropdown-item">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="all"
+                [(ngModel)]="isAllSelected"
+                (change)="selectAll($event)"
+              />
+              Всі
+            </label>
+          </div>
+          <div *ngFor="let item of country" class="dropdown-item">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="item.id"
+                [(ngModel)]="selectedCountry[item.id]"
+                (change)="updateSelectedCountry()"
+              />
+              {{ item.cuisineName }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">№</th>
+          <th scope="col">ID</th>
+
+          <th scope="col">Категорыя</th>
+          <th scope="col">Назва</th>
+          <th scope="col">Калорії</th>
+          <th scope="col">Зображення</th>
+          <th scope="col">Дії</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let region of filterRegion; let i = index">
+          <td>
+            {{ i + 1 }}
+            <p *ngIf="region.id">+</p>
+          </td>
+          <td>
+            <p *ngIf="region.id">{{ region.id }}</p>
+          </td>
+
+          <td>{{ region.country.cuisineName }}</td>
+          <td>{{ region.regionName }}</td>
+          <td class="image">
+            <img [src]="region.regionFlag" />
+          </td>
+          <td class="btn_tr">
+            <div class="edit button" (click)="addModal('edit', region)"></div>
+            <div class="dell button" (click)="delProducts(region)"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

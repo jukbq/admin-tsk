@@ -1,0 +1,23 @@
+@import "../styles/table";
+
+.form-select {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.filter {
+  float: right;
+
+  .dropdown {
+    .dropdown-toggle {
+      background-color: green;
+      border: 0.8px solid black;
+      color: white;
+    }
+    .dropdown-menu {
+      height: 400px;
+      overflow: auto;
+      right: -8px;
+    }
+  }
+}

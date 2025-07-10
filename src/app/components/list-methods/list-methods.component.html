@@ -1,0 +1,33 @@
+<section>
+
+    <h2>МЕТОДИ ПРИГОТУВННЯ</h2>
+
+    <button class="btn" type="button" (click)="navigateToAddOrEditCategorie('add', 0)">
+        ДОДАТИ МЕТОД ПРИГОТУВАННЯ
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Назва</th>
+                <th scope="col">Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let metod of metod; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{metod.methodCookinName}}</td>
+
+                <td class="btn_tr">
+                    <div class="edit button" (click)="navigateToAddOrEditCategorie('edit',metod)"></div>
+                    <div class="dell button" (click)="delMetod(metod)"></div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</section>

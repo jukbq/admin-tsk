@@ -1,0 +1,137 @@
+section {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .open {
+    width: 5vw;
+    height: 5vh;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-image: url("../../assets/icons/left.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: 0.8s;
+    z-index: 1000;
+    background-color: rgba(240, 248, 255, 0);
+
+    &.close {
+      background-image: url("../../assets/icons/right.png");
+    }
+  }
+
+  .menu_list {
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 6vh;
+    padding-right: 20px;
+    transition: 0.8s;
+    background-color: rgb(177, 183, 183);
+    border-right: 0.6px solid black;
+    box-shadow: 3px 0px 11px 0px #000000;
+
+    &.close {
+      left: -30%;
+    }
+
+    .authentication {
+      width: 5vw;
+      height: 5vh;
+      position: absolute;
+      top: 5px;
+      right: 0;
+
+      background-image: url("../../assets/icons/login.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: 0.8s;
+      z-index: 1000;
+
+      &.logout {
+        background-image: url("../../assets/icons/loout.png");
+      }
+    }
+
+    .admin_menu {
+      list-style: none;
+
+      .head_li {
+        width: 100%;
+
+        .text {
+          width: 100%;
+          height: 50px;
+          text-align: left;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 5px;
+          border-bottom: 0.4px solid black;
+
+          &:hover {
+            background-color: rgba(128, 128, 128, 0.578);
+          }
+
+          .batton {
+            width: 30px;
+            height: 30px;
+            overflow: hidden;
+            background-image: url("../../assets/icons/doen.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: white;
+            background-position: center;
+            transition: 0.8s;
+            background-color: rgba(245, 222, 179, 0);
+          }
+        }
+
+        .submenu {
+          width: 100%;
+          display: none;
+          transition: 0.8s;
+          list-style: none;
+          padding-left: 0;
+
+          .sub_li {
+            width: 100%;
+            height: 50px;
+            padding-left: 10px;
+
+            &:hover {
+              background-color: rgba(128, 128, 128, 0.578);
+            }
+          }
+        }
+
+        &.active {
+          .text {
+            background-color: rgba(128, 128, 128, 0.578);
+
+            .batton {
+              background-image: url("../../assets/icons/up.png");
+            }
+          }
+
+          .submenu {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+  }
+
+  .dmin_block {
+    width: 100%;
+    min-height: 100vh;
+  }
+}

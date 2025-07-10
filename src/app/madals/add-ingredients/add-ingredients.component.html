@@ -1,0 +1,124 @@
+<section>
+    <div class="close" (click)="close()" aria-label="Закрити"></div>
+
+    <div class="btn_block">
+        <button class="btn" (click)="addGroup()">Додати групу інгредієнтів</button>
+        <button class="btn" (click)="creatIng('getCategory')">Створити категорію продукта</button>
+        <button class="btn" (click)="creatIng('getProduct')">Створити продукт</button>
+        <button class="btn" (click)="creatIng('getUnit')">Створити одиницю</button>
+        <button class="btn" (click)="save()">Зберегти</button>
+    </div>
+
+
+
+    <div *ngFor="let products  of ingredients; let i = index" class="input_section">
+
+
+        <div class="table_block">
+
+            <div class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">№</th>
+                            <th scope="col">Назва</th>
+                            <th scope="col">Кількість</th>
+                            <th scope="col">Міра</th>
+                            <th scope="col">Коментар</th>
+                            <th scope="col">Зображення</th>
+                            <th scope="col">Дії</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let group of products.group; let j = index" class="ing_block">
+                            <tr class="ing_line">
+                                <td class="btn_tr">
+                                    <div class="action up" (click)="moveIngredientUp(i, j)" title="Перемістити вгору">
+                                    </div>
+                                    <div class="action down" (click)="moveIngredientDown(i, j)"
+                                        title="Перемістити вниз"></div>
+                                </td>
+                                <td>{{ j + 1 }}</td>
+                                <td>{{ group.selectedProduct ? group.selectedProduct.productsName : '' }}</td>
+                                <td>{{ group.amount }}</td>
+                                <td>{{ group.unitsMeasure }}</td>
+                                <td>{{ group.notes }}</td>
+                                <td class="image">
+                                    <img [src]="group.selectedProduct?.productsImages" />
+                                </td>
+                                <td class="btn_tr">
+                                    <div class="action edit" (click)="editIngredent(i, j)" title="Редагувати"></div>
+                                    <div class="action dell" (click)="delIng(i, j)" title="Видалити"></div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="input_block">
+
+            <div class="input_list">
+
+                <div class="input">
+
+                    <div class="del_group" (click)="delGroup(i)" aria-label="Видалити групу"></div>
+                    <div class="name_group">
+                        <label for="nameIngGroup">Назва групи </label>
+                        <input type="text" [(ngModel)]="products.name" name="nameIngGroup"
+                            placeholder="Назва групи інгредієнтів">
+                    </div>
+
+
+                    <div class="ingidient">
+                        <div class="name_product">
+
+                            <select name="productControl" class="form-select" [(ngModel)]="selectedCategory"
+                                (change)="onCategorySelectionChange()">
+                                <option>Обрати катнгорії</option>
+                                <option *ngFor="let category of productsCategories" [ngValue]="category">
+                                    {{ category.productCategoryName }}
+                                </option>
+                            </select>
+
+                            <select name="productsName" class="form-select" [(ngModel)]="selectProduct">
+                                <option>Обрати продукт</option>
+                                <option *ngFor="let product of filteredProducts" [ngValue]="product">
+                                    {{ product.productsName }}
+                                </option>
+                            </select>
+
+
+                        </div>
+
+                        <div class="number_product">
+
+                            <input type="number" [(ngModel)]="group.amount" placeholder="Введіть кількість">
+
+                            <select name="unitName" [(ngModel)]="group.unitsMeasure" class="form-select">
+                                <option [ngValue]="unit.unitName" *ngFor="let unit of getFilteredUnits()">
+                                    {{ unit.unitName }}
+                                </option>
+                            </select>
+
+                            <input type="text" [(ngModel)]="group.notes" placeholder="Коментар">
+
+
+                        </div>
+
+                    </div>
+                    <button class="btn" (click)="addIngredient(i)">Додати інгредієнт</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

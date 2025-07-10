@@ -1,0 +1,84 @@
+<section>
+  <h2>Продукти</h2>
+
+  <button class="btn" type="button" (click)="addModal('add', 0)">
+    ДОДАТИ ПРОДУКТИ
+  </button>
+
+  <div class="table">
+    <div class="filter">
+      <div class="dropdown" [ngClass]="{ show: isDropdownOpen }">
+        <button
+          class="btn dropdown-toggle"
+          type="button"
+          (click)="toggleDropdown()"
+        >
+          Обрати категорії
+        </button>
+        <div class="dropdown-menu" [ngClass]="{ show: isDropdownOpen }">
+          <div class="dropdown-item">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="all"
+                [(ngModel)]="isAllSelected"
+                (change)="selectAll($event)"
+              />
+              Всі
+            </label>
+          </div>
+          <div *ngFor="let item of productsCategories" class="dropdown-item">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="item.id"
+                [(ngModel)]="selectedCategories[item.id]"
+                (change)="updateSelectedCategories()"
+              />
+              {{ item.productCategoryName }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">№</th>
+          <th scope="col">ID</th>
+
+          <th scope="col">Категорыя</th>
+          <th scope="col">Назва</th>
+          <th scope="col">Калорії</th>
+          <th scope="col">Зображення</th>
+          <th scope="col">Дії</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let products of filteredProducts; let i = index">
+          <td>
+            {{ i + 1 }}
+            <p *ngIf="products.id">+</p>
+          </td>
+          <td>
+            <p *ngIf="products.id">{{ products.id }}</p>
+          </td>
+
+          <td>{{ products.productsCategory.productCategoryName }}</td>
+          <td>{{ products.productsName }}</td>
+          <td>{{ products.productsCalories }}</td>
+          <td class="image">
+            <img [src]="products.productsImages" />
+          </td>
+          <td class="btn_tr">
+            <div class="edit button" (click)="addModal('edit', products)"></div>
+            <div class="dell button" (click)="delProducts(products)"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

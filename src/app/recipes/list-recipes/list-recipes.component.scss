@@ -1,0 +1,151 @@
+section {
+  width: 100vw;
+  height: 100vh;
+  padding: 3vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .open {
+    width: 5vw;
+    height: 5vh;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-image: url("../../../assets/icons/left.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: white;
+    transition: 0.8s;
+    z-index: 1000;
+    background-color: rgba(240, 248, 255, 0);
+  }
+
+  .top_bloxk {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    .top_first {
+      width: 60%;
+      height: 3vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      h5 {
+        width: 100%;
+        float: left;
+      }
+
+      .btn {
+        margin-top: 0px;
+      }
+    }
+
+    .top_second {
+      width: 60%;
+      height: 8vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+
+      .filtr {
+        width: 100%;
+        height: 3vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        .form-select {
+          width: 40%;
+          width: 40%;
+        }
+      }
+
+      .serch {
+        width: 100%;
+        height: 3vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 10px;
+
+        .serch_byID,
+        .serch_by_name {
+          width: 48%;
+          input {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .list_recipe {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+
+    .table_block {
+      width: 100%;
+      margin-top: 20px;
+      overflow: auto;
+
+      thead {
+        width: 100%;
+
+        tr {
+          border-bottom: var(--clr-grey);
+        }
+      }
+
+      &.active {
+        display: none;
+      }
+
+      tbody {
+        tr {
+          .image {
+            width: 80px;
+            height: 70px;
+            overflow: hidden;
+
+            img {
+              height: 100%;
+            }
+          }
+
+          .btn_tr {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-bottom: none;
+
+            .button {
+              width: 20px;
+              height: 20px;
+              background-size: contain;
+              background-position: center;
+              background-repeat: no-repeat;
+              margin-bottom: 5px;
+            }
+
+            .edit {
+              background-image: url("../../../assets/icons/edit.png");
+            }
+
+            .dell {
+              background-image: url("../../../assets/icons/dell.png");
+            }
+          }
+        }
+      }
+    }
+  }
+}

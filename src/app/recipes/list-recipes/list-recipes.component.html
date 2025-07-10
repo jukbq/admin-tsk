@@ -1,0 +1,103 @@
+<section>
+  <div class="open" (click)="openHome()"></div>
+
+  <div class="top_bloxk">
+    <div class="top_first">
+      <h3 top>Загальна кількість рецептів = {{ allrecipeSumm }}</h3>
+      <button
+        class="btn"
+        type="button"
+        (click)="navigateToAddOrEditCategorie('add', 0)"
+      >
+        Додати категорію страви
+      </button>
+    </div>
+
+    <div class="top_second">
+      <!--Фільтр рецептів-->
+      <div class="filtr">
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          (change)="dishesFiltre($event)"
+        >
+          <option selected disabled>Обрати страву</option>
+          @for (dishes of dishesList; track dishes) {
+          <option [value]="dishes.id">{{ dishes.dishesName }}</option>
+          }
+        </select>
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          (change)="resipeFiltre($event)"
+        >
+          <option selected disabled>Обрати Катнгорію</option>
+          <option value="All">Всі катнгорії</option>
+          @for (category of filterCategoriesDishes; track category) {
+          <option [value]="category.id">{{ category.categoryName }}</option>
+          }
+        </select>
+      </div>
+      <div class="serch">
+        <div class="serch_byID">
+          <input
+            type="text"
+            [(ngModel)]="query"
+            (input)="onSearch('id')"
+            placeholder="Пошук рецепта по ID..."
+            class="search-input"
+          />
+        </div>
+        <div class="serch_by_name">
+          <input
+            type="text"
+            [(ngModel)]="query"
+            (input)="onSearch('name')"
+            placeholder="Пошук рецептів..."
+            class="search-input"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="list_recipe">
+    <h5>Кількість рецептів = {{ count }}</h5>
+
+    <!--Таблиця рецептів-->
+    <div class="table_block">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">№</th>
+            <th scope="col">ID</th>
+            <th scope="col">Категорія</th>
+            <th scope="col">Назва</th>
+            <th scope="col">Картинка</th>
+            <th scope="col">Дії</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(recipe of recipes; track recipes; let i = $index){
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ recipe.id }}</td>
+            <td>{{ recipe.categoriesDishes.categoryName }}</td>
+            <td>{{ recipe.recipeTitle }}</td>
+            <td class="image">
+              <img [src]="recipe.mainImage" />
+            </td>
+            <td class="btn_tr">
+              <div
+                class="edit button"
+                (click)="navigateToAddOrEditCategorie('edit', recipe)"
+              ></div>
+              <div class="dell button" (click)="delRecipe(recipe)"></div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

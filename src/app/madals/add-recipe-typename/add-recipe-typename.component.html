@@ -1,0 +1,56 @@
+<section>
+    <div class="close" (click)="close()" aria-label="Закрити"></div>
+    <div class="title">Додати тип рецепта</div>
+
+    <form [formGroup]="recipeTypeForm" (ngSubmit)="creatRecipeTypee()" class="form_container">
+
+        <div class="input_section" style="justify-content: space-around;">
+
+            <div class="data_block content_block">
+                <input formControlName="recipeTypeName" type="text" name="recipeTypeName" class="form-control"
+                    placeholder="*Назва" aria-label="Назва">
+                <input formControlName="slug" type="text" name="slug" class="form-control" placeholder="*Посилання"
+                    aria-label="Посилання">
+
+                <input formControlName="recipeTypeDescription" type="text" name="recipeTypeDescription"
+                    class="form-control" placeholder="*Опис" aria-label="Опис">
+                <input formControlName="metaTtile" type="text" name="metaTtile" class="form-control"
+                    placeholder="*Мета назва" aria-label="Мета назва">
+
+                <input formControlName="metaDescription" type="text" name="metaDescription" class="form-control"
+                    placeholder="*Мета опис" aria-label="Мета опис">
+            </div>
+
+            .<div class="data_block image_block">
+                <div class="progress_line">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                            aria-label="Default striped example" [style.width.%]="uploadPercent" aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+
+                <div class="image_field">
+                    <td *ngIf="recipeTypeImage" class="image">
+                        <img src="{{recipeTypeImage}}" alt="">
+                    </td>
+
+                    <input #fileInput type="file" style="display: none;" (change)="uploadImage($event)"
+                        accept="image/*" />
+                    <button class="overlay btn" type="button" (click)="fileInput.click()">Змінити зображення</button>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="batton_section">
+            <button type="submit" class="btn">
+                Зберегти
+            </button>
+        </div>
+
+    </form>
+</section>

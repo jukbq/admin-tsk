@@ -1,0 +1,34 @@
+<section>
+
+    <h2>Свято</h2>
+
+    <button class="btn" type="button" (click)="addModal('add', 0)">
+        ДОДАТИ
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Назва</th>
+                <th scope="col">Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let holiday of holiday; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{holiday.holidayName}}</td>
+                <td class="image">
+                    <img [src]="holiday.image" />
+                </td>
+                <td class="btn_tr">
+                    <div class="edit button" (click)="addModal('edit',holiday)"></div>
+                    <div class="dell button" (click)="delHoliday(holiday)"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</section>

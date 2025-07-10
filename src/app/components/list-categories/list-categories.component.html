@@ -1,0 +1,63 @@
+<section>
+
+    <h2>Категорії страв</h2>
+
+    <button class="btn" type="button" (click)="addModal('add', 0)">
+        Додати категорію страви
+    </button>
+
+    <select class="form-select" aria-label="Default select example" (change)="dishesFiltre($event)">
+        <option selected disabled>Обрати страву</option>
+        <option value="all">Всі</option>
+        @for (dishes of dishes; track dishes) {
+        <option [value]="dishes.id">{{dishes.dishesName}}</option>
+        }
+    </select>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Індекс</th>
+                <th scope="col">Страва</th>
+                <th scope="col">Назва категорії</th>
+                <th scope="col">Зображення</th>
+                <th scope="col">Дії</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="!filter">
+            <tr *ngFor="let categori of categoriesDishes; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ categori.categoryIndex}}</td>
+                <td>{{categori.dishes.dishesName}}</td>
+                <td>{{categori.categoryName }}</td>
+                <td class="image">
+                    <img [src]="categori.image" />
+                </td>
+                <td class="btn_tr">
+                    <div class="edit button" (click)="addModal('edit',categori)"></div>
+                    <div class="dell button" (click)="delCategori(categori)"></div>
+
+                </td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="filter">
+            <tr *ngFor="let categori of filterCategoriesDishes; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ categori.categoryIndex}}</td>
+                <td>{{categori.dishes.dishesName}}</td>
+                <td>{{categori.categoryName }}</td>
+                <td class="image">
+                    <img [src]="categori.image" />
+                </td>
+                <td class="btn_tr">
+                    <div class="edit button" (click)="addModal('edit',categori)"></div>
+                    <div class="dell button" (click)="delCategori(categori)"></div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</section>

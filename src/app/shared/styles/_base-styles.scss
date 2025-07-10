@@ -1,0 +1,183 @@
+@font-face {
+  font-family: "Mont Blanc";
+  src: url("https://fonts.cdnfonts.com/css/mont-blanc") format("truetype");
+}
+
+body {
+  .custom-font {
+    margin: 0;
+    font-family: "Mont Blanc", sans-serif;
+  }
+}
+
+:root {
+  --clr-one: #5a7a0a;
+  --clr-two: #83d350;
+  --clr-three: #fab036;
+  --clr-four: #fdd48a;
+  --clr-five: #513c2f;
+  --clr-grey: #636662;
+  --clr-white: #fff;
+  --clr-black: #212721;
+  --transition: all 0.3s linear;
+}
+
+ul {
+  padding-left: 0rem;
+}
+
+.btn {
+  color: var(--clr-white);
+  background: var(--clr-one);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: none;
+  margin-top: 25px;
+  transition: 0.35s;
+
+  &:not(.order-btn) i {
+    display: inline-block;
+    flex-shrink: 0;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    border: 2px solid var(--clr-white);
+    margin-left: 15px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      width: 6px;
+      height: 6px;
+      margin-left: -1px;
+      border-right: 2px solid var(--clr-white);
+      border-bottom: 2px solid var(--clr-white);
+    }
+  }
+
+  &:hover {
+    background: var(--clr-two);
+    color: var(--clr-white);
+  }
+}
+
+.accordion-item {
+  .mat-expansion-indicator {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--clr-black);
+    border-radius: 100%;
+    transition: var(--transition);
+
+    &::after {
+      position: absolute;
+      padding: 0px !important;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      margin-top: -1px;
+      border-right: 2px solid var(--clr-black);
+      border-bottom: 2px solid var(--clr-black);
+      transform: translate(-50%, -50%) rotate(45deg) !important;
+      transition: var(--transition);
+    }
+  }
+
+  &:hover {
+    .mat-expansion-indicator {
+      border: 2px solid var(--clr-two);
+
+      &::after {
+        border-right: 2px solid var(--clr-two);
+        border-bottom: 2px solid var(--clr-two);
+      }
+    }
+  }
+}
+
+h1,
+.h2_title {
+  display: inline-block;
+  position: relative;
+  font-size: 40px;
+  line-height: 1.2em;
+  font-weight: 600;
+  color: var(--clr-black);
+  margin-top: 50px;
+
+  /*   &::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: -50px;
+      width: 64px;
+      height: 54px;
+      background: url(https://firebasestorage.googleapis.com/v0/b/final-project-393613.appspot.com/o/decor%2Ftitle-decor.svg?alt=media&token=4f1d068e-62ba-4382-bd06-fa329a6710f5);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+  } */
+}
+
+.swiper-slide {
+  .slick-dots {
+    position: relative;
+    width: 3%;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    margin: 0 auto;
+
+    .slick-active {
+      background: var(--clr-one);
+
+      &:hover {
+        border: 1px solid var(--clr-one);
+      }
+    }
+
+    li {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: transparent;
+      border: 1px solid #d1d9ce;
+
+      button::before {
+        content: none;
+      }
+
+      &:hover {
+        background: var(--clr-two);
+      }
+    }
+  }
+}
+
+.ingModsl {
+  width: 90vw;
+  height: 90vh;
+  border-radius: 16px;
+  box-shadow: 0px 0px 20px -1px #595959;
+}
+
+.btn-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+
+mat-option{
+  font-size: 21px;
+}

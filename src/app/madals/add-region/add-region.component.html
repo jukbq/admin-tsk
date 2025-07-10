@@ -1,0 +1,57 @@
+<section>
+  <div class="close" (click)="close()" aria-label="Закрити"></div>
+
+  <h2>Додати продукти</h2>
+
+  <form [formGroup]="regionForm" (ngSubmit)="creatRegion()" class="form_container">
+    <div class="input_section" style="justify-content: space-around; align-items: center">
+      <div class="data_block content_block">
+        <select formControlName="country" [compareWith]="compareFn" name="country" class="form-select">
+          <option [ngValue]="item" *ngFor="let item of countries">
+            {{ item.cuisineName }}
+          </option>
+        </select>
+
+
+        <input formControlName="regionName" type="text" name="regionName" class="form-control" placeholder="*Назва"
+          aria-label="Назва" />
+
+        <input formControlName="slug" type="text" name="slug" class="form-control" placeholder="*Посилання"
+          aria-label="Посилання" />
+
+        <input formControlName="regionDescription" type="text" name="regionDescription" class="form-control"
+          placeholder="*Опис регіону" aria-label="Опис регіону" />
+
+        <input formControlName="metaTtile" type="text" name="metaTtile" class="form-control" placeholder="*Мета назва"
+          aria-label="Мета назва">
+
+        <input formControlName="metaDescription" type="text" name="metaDescription" class="form-control"
+          placeholder="*Мета опис" aria-label="Мета опис">
+      </div>
+
+      <div class="data_block image_block">
+        <div class="progress_line">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped" role="progressbar" aria-label="Default striped example"
+              [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+
+        <div class="image_field">
+          <td *ngIf="regionFlag" class="image">
+            <img src="{{ regionFlag }}" alt="" />
+          </td>
+
+          <input #fileInput type="file" style="display: none" (change)="uploadImage($event)" accept="image/*" />
+          <button class="overlay btn" type="button" (click)="fileInput.click()">
+            Змінити зображення
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="batton_section">
+      <button type="submit" class="btn">Зберегти</button>
+    </div>
+  </form>
+</section>

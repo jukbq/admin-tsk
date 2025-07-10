@@ -1,0 +1,25 @@
+<section>
+    <div class="close" (click)="close()" aria-label="Закрити"></div>
+
+    <div class="title">Додати одиницю</div>
+
+    <form [formGroup]="unitsForm" (ngSubmit)="creatUnits()" class="form_container">
+
+
+        <div class="input_section" style="justify-content: center; align-items: center;">
+
+            <div class="data_block content_block" style="height: auto;">
+                <input formControlName="unitName" type="text" name="unitName" class="form-control" placeholder="*Назва"
+                    aria-label="Назва" />
+            </div>
+        </div>
+
+        <div class="batton_section">
+            <button type="submit" class="btn">
+                Зберегти
+            </button>
+
+        </div>
+
+    </form>
+</section>

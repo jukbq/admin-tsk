@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+
+@import './app/shared/styles/base-styles';
+@import './app/shared/styles/input_style';
+
+html,
+body {
+    height: 100%;
+}
+
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cdk-overlay-pane {
+    max-width: unset !important;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

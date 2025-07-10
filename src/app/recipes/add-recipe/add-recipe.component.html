@@ -1,0 +1,460 @@
+<section>
+  <div class="open" (click)="openHome()"></div>
+
+  <input type="text" [(ngModel)]="slug" (input)="slugValid()" name="slug" class="form-control slug"
+    placeholder="*Посилання" aria-label="Посилання" [ngClass]="{
+      'is-valid': slugExists === false,
+      'is-invalid': slugExists === true
+    }" />
+
+  <!--Форма-->
+
+  <div class="recipe_creation_form row" [ngClass]="{ active: !recipes_form }">
+    <!--Список блоків форми-->
+    <div id="list-example" class="list-group">
+      <button type="button" class="list-group-item list-group-item-action" [ngbScrollSpyItem]="[spy, 'items-1']">
+        Оберіть пункти рецепта
+      </button>
+      <button type="button" class="list-group-item list-group-item-action" [ngbScrollSpyItem]="spy" fragment="items-2">
+        Основні дані рецепта
+      </button>
+      <button type="button" class="list-group-item list-group-item-action" [ngbScrollSpyItem]="spy" fragment="items-3">
+        Інструкція покрокова
+      </button>
+      <button type="button" class="list-group-item list-group-item-action" [ngbScrollSpyItem]="spy" fragment="items-4">
+        Мета дані рецепта
+      </button>
+      <button type="button" class="list-group-item list-group-item-action" [ngbScrollSpyItem]="spy" fragment="items-5">
+        Інгридієнти
+      </button>
+
+      <button type="button" class="btn next" (click)="test()">TEST</button>
+      <button type="button" class="btn next" (click)="creatRecipe()">
+        Створити рецепт
+      </button>
+    </div>
+
+    <!--Форма-->
+    <form [formGroup]="recipesForm" (ngSubmit)="creatRecipe()" ngbScrollSpy #spy="ngbScrollSpy" rootMargin="16px"
+      class="bg-light p-3 rounded-2 mb-3 form_conteiner">
+      <!--Вибір пунктів та категорій-->
+      <div class="section" ngbScrollSpyFragment="items-1">
+        Оберіть пункти рецепта
+      </div>
+      <div class="input_section">
+        <!--Страви-->
+        <div class="input_block">
+          <p>*Оберіть вид страви</p>
+          <div class="input dishes">
+            <select class="form-select" [compareWith]="compareFn" formControlName="dishes" name="dishes"
+              (change)="onDishesSelection()">
+              <option>Всі страви</option>
+              @for (dishes of dishesList; track dishes) {
+              <option [ngValue]="dishes">{{ dishes.dishesName }}</option>
+              }
+            </select>
+            <p>або</p>
+            <button type="button" class="btn btn-primary" (click)="addModal('dishes', 0)">
+              <i class="bi bi-plus"></i> Додати
+            </button>
+          </div>
+        </div>
+
+        <!--Категорії страв-->
+        <div class="input_block">
+          <p>*КатегоріЯ страви</p>
+          <div class="input categoriesDishes">
+            <select class="form-select" formControlName="categoriesDishes" name="categoriesDishes"
+              (change)="onCategoriSelection()">
+              <option>Обрати катнгорії</option>
+              @for (category of filterCategoriesDishes; track category) {
+              <option [ngValue]="category">{{ category.categoryName }}</option>
+              }
+            </select>
+
+            <p>або</p>
+            <button type="button" class="btn btn-primary" (click)="addModal('categoriesDishes', 0)">
+              <i class="bi bi-plus"></i> Додати
+            </button>
+          </div>
+        </div>
+
+        <!--Ключі рецептів-->
+        <div class="input_block">
+          <p>*Ключі рецептів</p>
+          <div class="input recipeKeys">
+            <mat-select formControlName="recipeKeys" name="recipeKeys" class="mat_select form-select" multiple>
+              <ng-container *ngFor="let group of groupedRecipeKeys">
+                <mat-optgroup class="option" [label]="group.disheName">
+                  <mat-option class="option" *ngFor="let recipe of group.recipes" [value]="recipe.id">
+                    {{ recipe.categoryName }}
+                  </mat-option>
+                </mat-optgroup>
+              </ng-container>
+            </mat-select>
+          </div>
+        </div>
+
+        <!--Кухні-->
+        <div class="input_block">
+          <p>*Країна походження страви</p>
+          <div class="input cuisine">
+            <select class="form-select" formControlName="cuisine" name="cuisine" (change)="onCountriSelection()">
+              @for (cuisine of cuisineList; track cuisine) {
+              <option [ngValue]="cuisine">{{ cuisine.cuisineName }}</option>
+              }
+            </select>
+            <p>або</p>
+            <button type="button" class="btn btn-primary" (click)="addModal('cuisine', 0)">
+              <i class="bi bi-plus"></i> Додати
+            </button>
+          </div>
+        </div>
+
+        <!--Регіони-->
+        <div class="input_block">
+          <p>*Регіон</p>
+          <div class="input region">
+            <select class="form-select" formControlName="region" name="region">
+              <option>Обрати катнгорії</option>
+              @for (region of regionFilter; track region) {
+              <option [ngValue]="region">{{ region.regionName }}</option>
+              }
+            </select>
+
+            <p>або</p>
+            <button type="button" class="btn btn-primary" (click)="addModal('categoriesDishes', 0)">
+              <i class="bi bi-plus"></i> Додати
+            </button>
+          </div>
+        </div>
+
+
+        <!--Важкість приготування-->
+        <div class="input_block">
+          <p>*Рівень важкості</p>
+          <div class="input difficultyPreparation">
+            <select class="form-select" formControlName="difficultyPreparation" name="difficultyPreparation">
+              @for (difficultyPreparation of difficultyPreparationList; track
+              difficultyPreparation) {
+              <option [ngValue]="difficultyPreparation">
+                {{ difficultyPreparation.name }}
+              </option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <!--тип страви-->
+        <div class="input_block">
+          <p>тип страви</p>
+          <div class="input recipe_type">
+            <mat-select formControlName="recipeType" name="recipeType" class="form-select" multiple>
+              @for (recipeType of recipeTypeList; track recipeType) {
+              <mat-option [value]="recipeType">
+                {{ recipeType.recipeTypeName }}</mat-option>
+              }
+            </mat-select>
+            <p>або</p>
+            <button type="button" class="btn btn-primary" (click)="addModal('recipe-typename', 0)">
+              <i class="bi bi-plus"></i> Додати
+            </button>
+          </div>
+        </div>
+
+        <!--Найкращий сезон-->
+        <div class="input_block">
+          <p>*Сезон</p>
+          <div class="input bestSeason">
+            <mat-select formControlName="bestSeason" name="bestSeason" class="form-select" multiple>
+              @for (bestSeason of bestSeasonList; track bestSeason) {
+              <mat-option [value]="bestSeason">
+                {{ bestSeason.name }}</mat-option>
+              }
+            </mat-select>
+          </div>
+        </div>
+
+        <!--Свято-->
+        <div class="input_block">
+          <p>Свято</p>
+          <div class="input bestSeason">
+            <mat-select formControlName="holiday" name="holiday" class="form-select" multiple>
+              @for (holideys of holidayList; track holideys) {
+              <mat-option [value]="holideys">
+                {{ holideys.holidayName }}</mat-option>
+              }
+            </mat-select>
+
+            <p>або</p>
+            <button type="button" class="btn btn-primary" (click)="addModal('holiday', 0)">
+              <i class="bi bi-plus"></i> Додати
+            </button>
+          </div>
+        </div>
+
+        <!--Час загальний-->
+        <div class="input_block">
+          <h4>Час загальний</h4>
+          <div class="input totalTime">
+            <input formControlName="totalTime" type="time" name="totalTime" class="form-control"
+              placeholder="*Введіть час загальний" />
+          </div>
+        </div>
+
+        <!--Час підготовки-->
+        <div class="input_block">
+          <h4>Час підготовки</h4>
+          <div class="input prepTime">
+            <input formControlName="prepTime" type="time" name="prepTime" class="form-control"
+              placeholder="*Введіть час підготовки" />
+          </div>
+        </div>
+
+        <!--Час готування-->
+        <div class="input_block">
+          <h4>Час готування</h4>
+          <div class="input cookTime">
+            <input formControlName="cookTime" type="time" name="cookTime" class="form-control"
+              placeholder="*Введіть час готування" />
+          </div>
+        </div>
+
+        <div class="input_block">
+          <h4>Введіть кількість порцій</h4>
+          <div class="input numberServings">
+            <input formControlName="numberServings" type="text" name="numberServings" class="form-control"
+              placeholder="*Введіть кількість порцій" />
+          </div>
+        </div>
+        <div class="input_block">
+          <h4>Введіть кількість калорій</h4>
+          <div class="input numberCalories">
+            <input formControlName="numberCalories" type="text" name="numberCalories" class="form-control"
+              placeholder="*Введіть кількість порцій" />
+          </div>
+        </div>
+      </div>
+
+      <!--Основна інформація про рецепт-->
+      <div class="section" ngbScrollSpyFragment="items-2">
+        Основні дані рецепта
+      </div>
+      <div class="input_section content">
+        <!--Назва рецепта-->
+        <div class="input_block">
+          <p>Назва рецепта</p>
+          <div class="input recipeTitle">
+            <input formControlName="recipeTitle" type="text" name="recipeTitle" class="form-control"
+              placeholder="*Введіь назву рецепта" />
+          </div>
+        </div>
+
+        <!--Підзаголовок рецепта-->
+        <div class="input_block recipe_subtitles">
+          <p>Підзаголовок</p>
+          <div class="input recipeSubtitles">
+            <input formControlName="recipeSubtitles" type="text" name="recipeSubtitles" class="form-control"
+              placeholder="Введіь підзаголовок рецепта" />
+          </div>
+        </div>
+
+        <!--Опис рецепта-->
+        <div class="input_block descriptionRecipe">
+          <p>Опис рецепта</p>
+          <div class="input">
+            <editor class="textarea" apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+              [init]="{ plugins: 'lists link image table code help wordcount' }" [inline]="false"
+              formControlName="descriptionRecipe"
+              toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help">
+            </editor>
+          </div>
+        </div>
+
+        <!--Поради рецепта-->
+        <div class="input_block advice">
+          <p>Поради рецепта</p>
+          <div class="input">
+            <editor class="textarea" apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+              [init]="{ plugins: 'lists link image table code help wordcount' }" [inline]="false"
+              formControlName="advice"
+              toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help">
+            </editor>
+          </div>
+        </div>
+
+        <!--Завершення-->
+        <div class="input_block completion">
+          <p>Завершення</p>
+          <div class="input">
+            <editor class="textarea" apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+              [init]="{ plugins: 'lists link image table code help wordcount' }" [inline]="false"
+              formControlName="completion"
+              toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help">
+            </editor>
+          </div>
+        </div>
+
+        <!--Зображення рецепта-->
+        <div class="input_block mainImage">
+          <p>Головне зображення</p>
+          <div class="progress_line">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped" role="progressbar" aria-label="Default striped example"
+                [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="image_field">
+            <td *ngIf="mainImage" class="image">
+              <img src="{{ mainImage }}" alt="" />
+            </td>
+
+            <input #fileInput type="file" style="display: none" (change)="uploadImage($event)" accept="image/*" />
+            <button class="overlay btn" type="button" (click)="fileInput.click()">
+              Змінити зображення
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!---Інструкція покрокова-->
+      <div class="section" ngbScrollSpyFragment="items-3">Інструкції</div>
+      <div class="input_section instructions">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">№</th>
+              <th scope="col">Зображення</th>
+              <th scope="col">Крок</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (step of instructions; track step; let i = $index) {
+            <ng-container class="group_block">
+              <tr class="group_name">
+                <h2 class="group_name">{{ step.groupName }}</h2>
+              </tr>
+              @for (group of step.group; track group; let j = $index) {
+              <ng-container class="ing_block">
+                <tr class="steps_line">
+                  <td>{{ j + 1 }}</td>
+                  <td class="image">
+                    <img [src]="group.stepImage" />
+                  </td>
+                  <td>
+                    <p [innerHTML]="group.stepName"></p>
+                    <br />
+                    <p [innerHTML]="group.description"></p>
+                  </td>
+                </tr>
+              </ng-container>
+              }
+            </ng-container>
+            }
+          </tbody>
+        </table>
+
+        <div class="batton_block">
+          <button type="button" class="btn" (click)="addModal('insyruction', 'add')">
+            Додати кроки
+          </button>
+          <button type="button" class="btn" (click)="addModal('insyruction', 'edit')">
+            Редагувати списиок
+          </button>
+        </div>
+      </div>
+
+      <!--SEO-->
+      <div class="section" ngbScrollSpyFragment="items-4">
+        Мета дані рецепта
+      </div>
+      <div class="input_section">
+        <!--Мета назва-->
+        <div class="input_block metaName">
+          <h4>Мета назва</h4>
+          <div class="input">
+            <input formControlName="seoName" type="text" name="seoName" class="form-control"
+              placeholder="*Введіь фокусну ключову фразу" />
+          </div>
+        </div>
+
+        <!--Мета опис-->
+        <div class="input_block metaDescription">
+          <h4>Мета опис</h4>
+          <div class="input">
+            <textarea class="form-control" placeholder="SEO опис" formControlName="seoDescription" name="seoDescription"
+              id=""></textarea>
+          </div>
+        </div>
+
+        <!--Ключлві слова-->
+        <div class="input_block metaKeywords">
+          <h4>Ключові слова</h4>
+          <div class="input">
+            <textarea class="form-control" placeholder="Ключові слова" formControlName="keywords" name="keywords"
+              id=""></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!--Інгридієнти-->
+      <div class="section" ngbScrollSpyFragment="items-5">Інгридієнти</div>
+      <div class="input_section ingredients">
+        <p>Кількість порці - {{ numberServings }}</p>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">№</th>
+              <th scope="col">Назва</th>
+              <th scope="col">Кількість</th>
+              <th scope="col">Міра</th>
+              <th scope="col">Коментар</th>
+              <th scope="col">Зображення</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (products of ingredients; track products; let i = $index) {
+            <ng-container class="group_block">
+              <tr class="group_name">
+                <td colspan="7">
+                  {{ products.name }}
+                </td>
+              </tr>
+              @for (group of products.group; track group; let j = $index) {
+              <ng-container class="ing_block">
+                <tr class="ing_line">
+                  <td>{{ j + 1 }}</td>
+                  <td>
+                    {{
+                      group.selectedProduct
+                        ? group.selectedProduct.productsName
+                        : ""
+                    }}
+                  </td>
+                  <td>{{ group.amount }}</td>
+                  <td>{{ group.unitsMeasure }}</td>
+                  <td>{{ group.notes }}</td>
+                  <td class="image">
+                    <img [src]="group.selectedProduct.productsImages" />
+                  </td>
+                </tr>
+              </ng-container>
+              }
+            </ng-container>
+            }
+          </tbody>
+        </table>
+
+        <div class="batton_block">
+          <button type="button" class="btn" (click)="addModal('ingredients', 'add')">
+            Додати інгриідієнти
+          </button>
+          <button type="button" class="btn" (click)="addModal('ingredients', 'edit')">
+            Редагувати списиок
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

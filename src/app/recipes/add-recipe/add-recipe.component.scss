@@ -1,0 +1,325 @@
+@import "../../shared/styles/input_style";
+@import "../../shared/styles/base-styles";
+
+section {
+  width: 100vw;
+  height: 100vh;
+  padding: 3vh;
+  overflow: hidden;
+
+  .slug {
+    width: 50%;
+  }
+
+  .open {
+    width: 5vw;
+    height: 5vh;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-image: url("../../../assets/icons/left.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: white;
+    transition: 0.8s;
+    z-index: 1000;
+    background-color: rgba(240, 248, 255, 0);
+  }
+
+  .recipe_creation_form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .list-group {
+      width: 20%;
+      height: 100%;
+      position: 20px;
+      padding-top: 50px;
+    }
+
+    .form_conteiner {
+      width: 80%;
+      height: 100%;
+      overflow-y: auto;
+
+      .section {
+        width: 100%;
+        text-align: center;
+        font-size: 26px;
+        font-weight: 800;
+        border-bottom: 2px double black;
+        padding: 10px;
+        margin: 20px 0;
+      }
+
+      .input_section {
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+
+        h2 {
+          width: 100%;
+          padding: 15px 0;
+        }
+
+        .input_block {
+          width: 46%;
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          border-bottom: 0.8px solid var(--clr-grey);
+
+          .input {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 16px;
+
+            select {
+              width: 80%;
+
+              option {
+                font-size: 24px;
+              }
+            }
+
+            button {
+              margin-top: -15px;
+            }
+          }
+
+          .recipeKeys,
+          .difficultyPreparation,
+          .bestSeason,
+          .keywords {
+            .select {
+              width: 100%;
+            }
+
+            textarea {
+              width: 100%;
+            }
+          }
+        }
+
+        .recipe_subtitles,
+        .metaName,
+        .metaDescription,
+        .metaKeywords {
+          width: 100%;
+        }
+
+        .descriptionRecipe,
+        .advice,
+        .completion {
+          width: 48%;
+
+          .input {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+
+            .textarea {
+              width: 90%;
+            }
+          }
+        }
+
+        .mainImage {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          .progress_line {
+            margin-top: 36px;
+            width: 100%;
+
+            .progress {
+              width: 100%;
+            }
+          }
+
+          .image_field {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 19px;
+
+            .image {
+              max-width: 100%;
+              height: 800%;
+              overflow: hidden;
+
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+
+              margin-bottom: 30px;
+            }
+
+            .btn {
+              width: 175px;
+              height: 52px;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+            }
+          }
+        }
+      }
+
+      .instructions {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        table {
+          width: 100%;
+          margin-top: 20px;
+
+          thead {
+            width: 100%;
+
+            tr {
+              border-bottom: var(--clr-grey);
+            }
+          }
+
+          tbody {
+            width: 100%;
+
+            .group_name {
+              width: 100%;
+              text-align: center;
+              margin-top: 16px;
+              font-size: 20px;
+              border-top: 0.5px solid var(--clr-grey);
+              border-bottom: 0.5px solid var(--clr-grey);
+            }
+
+            .steps_line {
+              .image {
+                width: 80px;
+                height: 70px;
+                overflow: hidden;
+
+                img {
+                  height: 100%;
+                }
+              }
+            }
+
+            .btn_tr {
+              width: 45px;
+              display: flex;
+              flex-direction: column;
+              border-bottom: none;
+
+              a {
+                padding: 5px;
+                overflow: hidden;
+
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+            }
+          }
+        }
+
+        .batton_block {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+
+      .ingredients {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        table {
+          width: 100%;
+          margin-top: 20px;
+
+          thead {
+            width: 100%;
+
+            tr {
+              border-bottom: var(--clr-grey);
+            }
+          }
+
+          tbody {
+            width: 100%;
+
+            .group_name {
+              width: 100%;
+              text-align: center;
+              margin-top: 16px;
+              font-size: 20px;
+              border-top: 0.5px solid var(--clr-grey);
+              border-bottom: 0.5px solid var(--clr-grey);
+            }
+
+            .ing_line {
+              .image {
+                width: 80px;
+                height: 70px;
+                overflow: hidden;
+
+                img {
+                  height: 100%;
+                }
+              }
+            }
+          }
+
+          .btn_tr {
+            width: 45px;
+            display: flex;
+            flex-direction: column;
+            border-bottom: none;
+
+            a {
+              padding: 5px;
+              overflow: hidden;
+
+              svg {
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+        }
+
+        .batton_block {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+}
