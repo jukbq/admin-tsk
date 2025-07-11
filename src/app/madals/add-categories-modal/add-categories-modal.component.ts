@@ -58,6 +58,7 @@ export class AddCategoriesModalComponent {
     private storsgeIcon: Storage,
     private dishesService: DishesService,
     private categoryService: CategoriesService,
+    private recipesService: RecipesService,
     private recipeService: RecipesService,
     public dialogRef: MatDialogRef<AddCategoriesModalComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -82,6 +83,7 @@ export class AddCategoriesModalComponent {
       categoryIndex: [null],
       smallName: [null],
       slug: [null],
+      smallCategoryName: [null],
       categoryName: [null],
       categoryDescription: [null],
       seoCategoryName: [null],
@@ -115,6 +117,7 @@ export class AddCategoriesModalComponent {
     this.categoriesDishesForm.patchValue({
       dishes: categori.dishes,
       categoryIndex: categori.categoryIndex,
+      smallCategoryName: categori.smallCategoryName,
       categoryName: categori.categoryName,
       categoryDescription: categori.categoryDescription,
       seoCategoryName: categori.seoCategoryName,
@@ -289,12 +292,27 @@ export class AddCategoriesModalComponent {
   //Перевірка slug
   async slugValid(): Promise<void> {
     const trimmed = this.slug.trim();
+
+    // 🔴 Перевірка на наявність кирилиці
+    const hasCyrillic = /[а-яіїєґА-ЯІЇЄҐ]/.test(trimmed);
+    if (hasCyrillic) {
+      alert('❌ Слаг не має містити кирилицю. Використовуй тільки латиницю, цифри та дефіси.');
+      this.slugExists = true; // можна показати, що невалідний
+      return;
+    }
+
     if (!trimmed) {
       this.slugExists = null;
       return;
     }
 
-    const docSnap = await this.dishesService.checkSlugExistsOnce(trimmed);
+    const docSnap = await this.recipesService.checkSlugExistsOnce(trimmed);
     this.slugExists = docSnap.exists();
+
+    if (this.slugExists) {
+      alert('❌ Такий слаг вже існує. Вибери інший.');
+    } else {
+      alert('✅ Слаг виглядає добре і вільний.');
+    }
   }
 }

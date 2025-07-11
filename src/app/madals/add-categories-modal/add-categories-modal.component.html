@@ -9,6 +9,7 @@
       'is-invalid': slugExists === true
     }" />
 
+
   <form [formGroup]="categoriesDishesForm" (ngSubmit)="creatCategories()" class="form_container">
     <div class="input_section">
       <div class="data_block content_block">
@@ -20,6 +21,9 @@
 
         <input formControlName="categoryIndex" type="number" name="categoryIndex" class="form-control"
           placeholder="*Порядок категорії" aria-label="Порядок категорії" />
+
+        <input formControlName="smallCategoryName" type="text" name="smallCategoryName" class="form-control"
+          placeholder="*Коротка назва" aria-label="Коротка назва" />
         <input formControlName="categoryName" type="text" name="categoryName" class="form-control" placeholder="*Назва"
           aria-label="Назва" />
 
