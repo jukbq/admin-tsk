@@ -1,6 +1,5 @@
 export interface DishesRequest {
   dishesindex: number;
-  smallDishesName: string;
   dishesName: string;
   dishDescription: string;
   seoName: string;

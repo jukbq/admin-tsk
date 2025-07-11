@@ -8,7 +8,6 @@ export interface CategoriesRequest {
   seoDescription: DishesResponse;
   dishesImage: DishesResponse;
   categoryIndex: number;
-  smallCategoryName: string;
   categoryName: string;
   categoryDescription: string;
   seoCategoryName: string;

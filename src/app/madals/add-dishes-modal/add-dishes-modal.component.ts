@@ -80,7 +80,6 @@ export class AddDishesModalComponent {
   initDishesForm(): void {
     this.dishesForm = this.formBuild.group({
       dishesindex: 0,
-      smallDishesName: [null],
       dishesName: [null, Validators.required],
       dishDescription: [null],
       seoName: [null],
@@ -103,7 +102,6 @@ export class AddDishesModalComponent {
   editDishes(dishes: DishesResponse) {
     this.dishesForm.patchValue({
       dishesindex: dishes.dishesindex,
-      smallDishesName: dishes.dishesindex,
       dishesName: dishes.dishesName,
       dishDescription: dishes.dishDescription,
       seoName: dishes.seoName,
@@ -150,7 +148,6 @@ export class AddDishesModalComponent {
               ...category.dishes, // Зберігаємо всі старі дані
               additionalImage: updatedCuisineData.additionalImage,
               dishDescription: updatedCuisineData.dishDescription,
-              smallDishesName: updatedCuisineData.smallDishesName,
               dishesName: updatedCuisineData.dishesName,
               dishesindex: updatedCuisineData.dishesindex,
               image: updatedCuisineData.image,

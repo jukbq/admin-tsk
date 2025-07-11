@@ -92,6 +92,7 @@ export class CountriesService {
           countryid: region.country.id,
           id: region.id,
           regionName: region.regionName,
+          slug: region.slug,
           regionFlag: region.regionFlag,
         }))
 

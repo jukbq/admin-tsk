@@ -3,108 +3,49 @@
 
   <div class="title">Додати страву</div>
 
-  <input
-    type="text"
-    [(ngModel)]="slug"
-    (input)="slugValid()"
-    name="slug"
-    class="form-control slug"
-    placeholder="*Посилання"
-    aria-label="Посилання"
-    [ngClass]="{
+  <input type="text" [(ngModel)]="slug" (input)="slugValid()" name="slug" class="form-control slug"
+    placeholder="*Посилання" aria-label="Посилання" [ngClass]="{
       'is-valid': slugExists === false,
       'is-invalid': slugExists === true
-    }"
-  />
+    }" />
 
-  <form
-    [formGroup]="dishesForm"
-    (ngSubmit)="creatDishes()"
-    class="form_container"
-  >
+  <form [formGroup]="dishesForm" (ngSubmit)="creatDishes()" class="form_container">
     <div class="input_section">
       <div class="data_block content_block">
-        <input
-          formControlName="dishesindex"
-          type="number"
-          name="dishesindex"
-          class="form-control"
-          placeholder="*Порядок категорії"
-          aria-label="Порядок Страви"
-        />
+        <input formControlName="dishesindex" type="number" name="dishesindex" class="form-control"
+          placeholder="*Порядок категорії" aria-label="Порядок Страви" />
 
-        <input
-          formControlName="smallDishesName"
-          type="text"
-          name="smallDishesName"
-          class="form-control"
-          placeholder="*Маленька назва"
-          aria-label="Маленька назва"
-        />
 
-        <input
-          formControlName="dishesName"
-          type="text"
-          name="dishesName"
-          class="form-control"
-          placeholder="*Повна назва"
-          aria-label="Повна назва"
-        />
+
+        <input formControlName="dishesName" type="text" name="dishesName" class="form-control"
+          placeholder="*Повна назва" aria-label="Повна назва" />
 
         <div class="input">
-          <editor
-            apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
-            [init]="{ plugins: 'lists link image table code help wordcount' }"
-            [inline]="false"
+          <editor apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+            [init]="{ plugins: 'lists link image table code help wordcount' }" [inline]="false"
             formControlName="dishDescription"
-            toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help"
-          >
+            toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help">
           </editor>
         </div>
       </div>
 
       <div class="data_block seo_block">
         <h3>SEO</h3>
-        <input
-          formControlName="seoName"
-          type="text"
-          name="seoName"
-          class="form-control"
-          placeholder="*Назва"
-          aria-label="OG Назва"
-        />
+        <input formControlName="seoName" type="text" name="seoName" class="form-control" placeholder="*Назва"
+          aria-label="OG Назва" />
 
-        <textarea
-          formControlName="seoDescription"
-          type="text"
-          name="seoDescription"
-          id=""
-          cols="30"
-          rows="10"
-          class="form-control dishDescription"
-          placeholder="SEO опис"
-        ></textarea>
+        <textarea formControlName="seoDescription" type="text" name="seoDescription" id="" cols="30" rows="10"
+          class="form-control dishDescription" placeholder="SEO опис"></textarea>
 
-        <textarea
-          class="form-control keywords"
-          type="text"
-          placeholder="Ключові слова"
-          formControlName="keywords"
-          name="keywords"
-        ></textarea>
+        <textarea class="form-control keywords" type="text" placeholder="Ключові слова" formControlName="keywords"
+          name="keywords"></textarea>
       </div>
 
       <div class="data_block image_block">
         <div class="progress_line">
           <div class="progress">
-            <div
-              class="progress-bar progress-bar-striped"
-              role="progressbar"
-              aria-label="Default striped example"
-              [style.width.%]="uploadPercent"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
+            <div class="progress-bar progress-bar-striped" role="progressbar" aria-label="Default striped example"
+              [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
 
@@ -113,13 +54,7 @@
             <img src="{{ dishesImage }}" alt="" />
           </td>
 
-          <input
-            #fileInput
-            type="file"
-            style="display: none"
-            (change)="uploadUserImage($event)"
-            accept="image/*"
-          />
+          <input #fileInput type="file" style="display: none" (change)="uploadUserImage($event)" accept="image/*" />
           <button class="overlay btn" type="button" (click)="fileInput.click()">
             Змінити зображення
           </button>
@@ -129,18 +64,9 @@
           <td *ngIf="additionalImage" class="image">
             <img src="{{ additionalImage }}" alt="" />
           </td>
-          <input
-            #fileInputAdditional
-            type="file"
-            style="display: none"
-            (change)="uploadUserImage($event, 'additional')"
-            accept="image/*"
-          />
-          <button
-            class="overlay btn"
-            type="button"
-            (click)="fileInputAdditional.click()"
-          >
+          <input #fileInputAdditional type="file" style="display: none" (change)="uploadUserImage($event, 'additional')"
+            accept="image/*" />
+          <button class="overlay btn" type="button" (click)="fileInputAdditional.click()">
             Змінити додаткове зображення
           </button>
         </div>

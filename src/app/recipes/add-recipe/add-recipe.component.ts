@@ -308,6 +308,8 @@ export class AddRecipeComponent {
         this.regionFilter.sort((a, b) =>
           a.regionName.localeCompare(b.regionName)
         );
+        console.log();
+
       });
   }
 

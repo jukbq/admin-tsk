@@ -83,7 +83,6 @@ export class AddCategoriesModalComponent {
       categoryIndex: [null],
       smallName: [null],
       slug: [null],
-      smallCategoryName: [null],
       categoryName: [null],
       categoryDescription: [null],
       seoCategoryName: [null],
@@ -117,7 +116,6 @@ export class AddCategoriesModalComponent {
     this.categoriesDishesForm.patchValue({
       dishes: categori.dishes,
       categoryIndex: categori.categoryIndex,
-      smallCategoryName: categori.smallCategoryName,
       categoryName: categori.categoryName,
       categoryDescription: categori.categoryDescription,
       seoCategoryName: categori.seoCategoryName,
