@@ -1,128 +1,169 @@
 <section>
-    <div class="btn-close" (click)="close()" aria-label="Закрити"></div>
+  <div class="btn-close" (click)="close()" aria-label="Закрити"></div>
 
-    <div class="input_conteiner">
-
-        <div class="table_block">
-            <div class="tbale">
-                @for(steps of instructions; track steps; let i = $index){
-                <h2 class="group_name">{{steps.groupName}}</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th scope="col">№</th>
-                            <th scope="col">Зображення</th>
-                            <th scope="col">Кроки</th>
-                            <th scope="col">Дії</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @for(group of steps.group; track group; let j = $index){
-                        <ng-container class="ing_block">
-
-                            <tr class="steps_line">
-                                <td class="btn_tr">
-                                    <div class="action up" (click)="moveSteptUp(i, j)" title="Перемістити вгору"></div>
-                                    <div class="action down" (click)="moveStepDown(i, j)" title="Перемістити вниз">
-                                    </div>
-                                </td>
-                                <td>{{ j + 1 }}</td>
-                                <td class="image">
-                                    <img [src]="group.stepImage">
-                                </td>
-                                <td>
-                                    <h3 [innerHTML]="group.stepName"></h3>
-                                    <!--       <br>
+  <div class="input_conteiner">
+    <div class="table_block">
+      <div class="tbale">
+        @for(steps of instructions; track steps; let i = $index){
+        <h2 class="group_name">{{ steps.groupName }}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th scope="col">№</th>
+              <th scope="col">Зображення</th>
+              <th scope="col">Кроки</th>
+              <th scope="col">Дії</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(group of steps.group; track group; let j = $index){
+            <ng-container class="ing_block">
+              <tr class="steps_line">
+                <td class="btn_tr">
+                  <div
+                    class="action up"
+                    (click)="moveSteptUp(i, j)"
+                    title="Перемістити вгору"
+                  ></div>
+                  <div
+                    class="action down"
+                    (click)="moveStepDown(i, j)"
+                    title="Перемістити вниз"
+                  ></div>
+                </td>
+                <td>{{ j + 1 }}</td>
+                <td class="image">
+                  <img [src]="group.stepImage" />
+                </td>
+                <td>
+                  <h3 [innerHTML]="group.stepName"></h3>
+                  <!--       <br>
                                     <p [innerHTML]="group.description"></p> -->
-                                </td>
-                                <td class="btn_tr">
-                                    <div class="action edit" (click)="editStep(i, j)" title="Редагувати"></div>
-                                    <div class="action dell" (click)="delStep(i, j)" title="Видалити"></div>
-                                </td>
+                </td>
+                <td class="btn_tr">
+                  <div
+                    class="action edit"
+                    (click)="editStep(i, j)"
+                    title="Редагувати"
+                  ></div>
+                  <div
+                    class="action dell"
+                    (click)="delStep(i, j)"
+                    title="Видалити"
+                  ></div>
+                </td>
+              </tr>
+            </ng-container>
+            }
+          </tbody>
+        </table>
 
-                            </tr>
-                        </ng-container>
-                        }
-                    </tbody>
-                </table>
-
-                }
-            </div>
-
-        </div>
-
-
-        <div class="add_instructions">
-            <div class="top_block">
-                <button class="btn" (click)="addGroup()">Додати групу</button>
-                <button class="btn" (click)="save()">Зберегти</button>
-                <button class="btn" (click)="test()">Тест</button>
-            </div>
-
-            <div class="add_step_block">
-                <div class="fom_block">
-                    @for(steps of instructions; track steps; let i = $index){
-                    <div class="instruction_block">
-                        <div class="del_group" (click)="delGroup(i)" aria-label="Видалити групу"></div>
-
-                        <div class="name_group">
-                            <label for="nameStepsGroup">Назва групи </label>
-                            <input type="text" [(ngModel)]="steps.groupName" name="nameStepsGroup"
-                                placeholder="Назва групи інструкцій">
-                        </div>
-
-                        <form [formGroup]="stepForm" (ngSubmit)="addStep(i)" class="instruction">
-                            <div class="image_block">
-                                <div *ngIf="stepImage" class="image">
-                                    <img src="{{stepImage}}" alt="">
-                                </div>
-
-                                <input #fileInput type="file" style="display: none;" (change)="uploadStepImage($event)"
-                                    accept="image/*" />
-                                <button class="overlay btn" type="button"
-                                    (click)="fileInput.click()">зображення</button>
-                            </div>
-
-                            <div class="content_step">
-
-                                <input formControlName="stepName" type="text" name="stepName" class="form-control"
-                                    placeholder="*Введіь назву крока">
-                                <div class="step_area">
-
-                                    <div class="form-group">
-                                        <label>Коротки крок</label>
-                                        <editor class="form-control"
-                                            apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
-                                            [init]="{ plugins: 'lists link image table code help wordcount' }"
-                                            [inline]="false" formControlName="description"
-                                            toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help">
-                                        </editor>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Докладний опис кроку (для чайників 🤓)</label>
-                                        <editor class="form-control"
-                                            apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
-                                            [init]="{ plugins: 'lists link image table code help wordcount' }"
-                                            [inline]="false" formControlName="fullDescription"
-                                            toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help">
-                                        </editor>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <button type="submit" class="btn">
-                                {{ !edit_status ? "Додати крок" :  "Зберегти" }}</button>
-                        </form>
-
-                    </div>
-                    }
-                </div>
-
-            </div>
-        </div>
+        }
+      </div>
     </div>
 
+    <div class="add_instructions">
+      <div class="top_block">
+        <button class="btn" (click)="addGroup()">Додати групу</button>
+        <button class="btn" (click)="save()">Зберегти</button>
+        <button class="btn" (click)="test()">Тест</button>
+      </div>
+
+      <div class="add_step_block">
+        <div class="fom_block">
+          @for(steps of instructions; track steps; let i = $index){
+          <div class="instruction_block">
+            <div
+              class="del_group"
+              (click)="delGroup(i)"
+              aria-label="Видалити групу"
+            ></div>
+
+            <div class="name_group">
+              <label for="nameStepsGroup">Назва групи </label>
+              <input
+                type="text"
+                [(ngModel)]="steps.groupName"
+                name="nameStepsGroup"
+                placeholder="Назва групи інструкцій"
+              />
+            </div>
+
+            <form
+              [formGroup]="stepForm"
+              (ngSubmit)="addStep(i)"
+              class="instruction"
+            >
+              <div class="image_block">
+                <div *ngIf="stepImage" class="image">
+                  <img src="{{ stepImage }}" alt="" />
+                </div>
+
+                <input
+                  #fileInput
+                  type="file"
+                  style="display: none"
+                  (change)="uploadStepImage($event)"
+                  accept="image/*"
+                />
+                <button
+                  class="overlay btn"
+                  type="button"
+                  (click)="fileInput.click()"
+                >
+                  зображення
+                </button>
+              </div>
+
+              <div class="content_step">
+                <input
+                  formControlName="stepName"
+                  type="text"
+                  name="stepName"
+                  class="form-control"
+                  placeholder="*Введіь назву крока"
+                />
+                <div class="step_area">
+                  <div class="form-group">
+                    <label>Коротки крок</label>
+                    <editor
+                      class="form-control"
+                      apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+                      [init]="{
+                        plugins: 'lists link image table code help wordcount'
+                      }"
+                      [inline]="false"
+                      formControlName="description"
+                      toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help"
+                    >
+                    </editor>
+                  </div>
+                  <div class="form-group">
+                    <label>Докладний опис кроку (для чайників 🤓)</label>
+                    <editor
+                      class="form-control"
+                      apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+                      [init]="{
+                        plugins: 'lists link image table code help wordcount'
+                      }"
+                      [inline]="false"
+                      formControlName="fullDescription"
+                      toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help"
+                    >
+                    </editor>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn">
+                {{ !edit_status ? "Додати крок" : "Зберегти" }}
+              </button>
+            </form>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

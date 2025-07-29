@@ -19,12 +19,12 @@ import { CountriesService } from '../../shared/services/countries/countries.serv
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Firestore } from '@angular/fire/firestore';
 import { RecipesService } from '../../shared/services/recipes/recipes.service';
-import { EditorComponent } from '@tinymce/tinymce-angular';
+
 
 @Component({
   selector: 'app-add-cuisine-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, EditorComponent,],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-cuisine-modal.component.html',
   styleUrl: './add-cuisine-modal.component.scss',
 })

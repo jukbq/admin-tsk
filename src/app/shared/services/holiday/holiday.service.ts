@@ -19,7 +19,6 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
   providedIn: 'root',
 })
 export class HolidayService {
-  private holidayArr!: Array<HolidayResponse>;
   private holidayCollection!: CollectionReference<DocumentData>;
 
   constructor(

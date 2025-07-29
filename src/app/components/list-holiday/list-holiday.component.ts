@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AddHolidayModalComponent } from '../../madals/add-holiday-modal/add-holiday-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-list-holiday',
   standalone: true,
@@ -22,7 +23,7 @@ export class ListHolidayComponent {
     private storsgeIcon: Storage,
     private holidayService: HolidayService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.geHoliday();

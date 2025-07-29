@@ -121,6 +121,7 @@ export class AddRecipeComponent {
   slug: string = '';
   slugExists: boolean | null = null;
 
+
   constructor(
     private formBuilder: FormBuilder,
     private recipesService: RecipesService,

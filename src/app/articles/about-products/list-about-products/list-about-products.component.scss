@@ -1,0 +1,30 @@
+@import "../../../components/styles/table";
+
+.form-select {
+  width: 50%;
+  margin-top: 20px;
+}
+
+section {
+  width: 100vw;
+  height: 100vh;
+  padding: 3vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .open {
+    width: 5vw;
+    height: 5vh;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-image: url("../../../../assets/icons/left.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: white;
+    transition: 0.8s;
+    z-index: 1000;
+    background-color: rgba(240, 248, 255, 0);
+  }
+}
