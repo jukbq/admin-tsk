@@ -18,7 +18,7 @@
       <tr *ngFor="let item of aboutProducts; let i = index">
         <td>{{ i + 1 }}</td>
         <td *ngIf="item.id">{{ item.id }}</td>
-        <td>{{ item.title }}</td>
+        <td>{{ item.paragraphName }}</td>
 
         <td class="btn_tr">
           <div class="edit button" (click)="addModal('edit', item)"></div>

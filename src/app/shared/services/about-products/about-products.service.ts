@@ -41,36 +41,8 @@ export class AboutProductsService {
   }
 
 
-  async deleteArticleWithImages(articleSlug: string, articleId: string): Promise<void> {
-    console.log(`🗑️ Видалення статті з ID: ${articleId} та slug: ${articleSlug}`);
 
-    const storage = getStorage();
-    const folderRef = ref(storage, `about-products/${articleSlug}`);
 
-    try {
-      const filesList = await listAll(folderRef);
 
-      if (filesList.items.length > 0) {
-        // Якщо файли є, видаляємо всі
-        const deletePromises = filesList.items.map(item => deleteObject(item));
-        await Promise.all(deletePromises);
-      } else {
-        console.log('ℹ️ Файлів для видалення не знайдено');
-      }
-
-    } catch (error: any) {
-      // Якщо 400 Bad Request — швидше за все, папка порожня (нема файлів)
-      if (error.code === 'storage/invalid-root-operation' || error.code === 'storage/object-not-found' || error.message.includes('400')) {
-        console.warn('⚠️ Папка для зображень порожня або не існує — продовжуємо видалення статті');
-      } else {
-        console.error('❌ Помилка при видаленні файлів:', error);
-        throw error;
-      }
-    }
-
-    // Видаляємо документ Firestore після очищення Storage
-    const aboutProductsDocumentReference = doc(this.afs, `aboutProducts/${articleId}`);
-    await deleteDoc(aboutProductsDocumentReference);
-  }
 
 }

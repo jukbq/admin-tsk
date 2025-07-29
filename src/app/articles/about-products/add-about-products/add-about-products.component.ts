@@ -14,6 +14,9 @@ import { Storage, deleteObject, getDownloadURL, percentage, ref, uploadBytesResu
 import { AboutProductsResponse } from '../../../shared/interfaces/about-products';
 import { ListAboutProductsComponent } from '../list-about-products/list-about-products.component';
 import { MatSelect } from '@angular/material/select';
+import { ProductsResponse } from '../../../shared/interfaces/products';
+import { ProductCategoryService } from '../../../shared/services/productCategory/product-category.service';
+import { ProductCategoryResponse } from '../../../shared/interfaces/productCategory';
 
 @Component({
   selector: 'app-add-about-products',
@@ -31,8 +34,10 @@ export class AddAboutProductsComponent {
     paragraphImage: '',
   };
   articleParagraphs: any[] = [];
+  productsCategories: any[] = [];
   slug: string = '';
   articleName: string = '';
+  productCategoryName: string = '';
   slugExists: boolean | null = null;
   paragraphForm!: FormGroup;
 
@@ -56,18 +61,28 @@ export class AddAboutProductsComponent {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private aboutProductsService: AboutProductsService,
+    private productCategoruService: ProductCategoryService,
     private storsge: Storage,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.getProductCategories();
     this.initparagraphForm();
     if (this.data.action === 'edit') {
       this.editarticle(this.data.object);
     }
   }
 
-
+  // Отримання категорії з сервера
+  getProductCategories(): void {
+    this.productCategoruService.getAll().subscribe((data: any) => {
+      this.productsCategories = data as ProductCategoryResponse[];
+      this.productsCategories.sort((a, b) =>
+        a.productCategoryName.localeCompare(b.productCategoryName)
+      );
+    });
+  }
 
   // Додавання або редагування статті
   creatArticle() {
@@ -75,6 +90,7 @@ export class AddAboutProductsComponent {
     const doc = {
       slug: this.slug,
       articleName: this.articleName,
+      productCategoryName: this.productCategoryName,
       articleParagraphs: this.articleParagraphs
     }
     const updatedArticleData = doc as AboutProductsResponse;
@@ -93,10 +109,14 @@ export class AddAboutProductsComponent {
     }
   }
 
+  compareFn(c1: ProductsResponse, c2: ProductsResponse): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
 
   // Редагування меню
   editarticle(article: AboutProductsResponse): void {
     this.articleName = article.articleName;
+    this.productCategoryName = article.productCategoryName;
     this.articleParagraphs = article.articleParagraphs || [];
     this.article_edit_status = true;
     this.articleID = article.slug;
@@ -216,6 +236,7 @@ export class AddAboutProductsComponent {
     const doc = {
       slug: this.slug,
       articleName: this.articleName,
+      productCategoryName: this.productCategoryName,
       articleParagraphs: this.articleParagraphs
     }
     console.log('doc', doc);
@@ -295,6 +316,11 @@ export class AddAboutProductsComponent {
   //видалити крок
   delParagraph(i: number): void {
     this.articleParagraphs.splice(i, 1);
+  }
+
+
+  close(): void {
+    this.dialogRef.close();
   }
 
 }
