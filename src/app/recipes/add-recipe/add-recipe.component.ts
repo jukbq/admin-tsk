@@ -155,8 +155,6 @@ export class AddRecipeComponent {
       if (action === 'edit' && object) {
         this.edit_status = true;
         this.editRecipe(object);
-
-
       }
     });
   }
@@ -309,7 +307,7 @@ export class AddRecipeComponent {
         this.regionFilter.sort((a, b) =>
           a.regionName.localeCompare(b.regionName)
         );
-        console.log();
+
 
       });
   }

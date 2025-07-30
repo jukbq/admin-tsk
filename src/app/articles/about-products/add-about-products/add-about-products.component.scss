@@ -4,165 +4,169 @@
 section {
   width: 100vw;
   height: 100vh;
+  padding: 2vh;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 
-  .buttons {
+  .input_area {
     width: 100%;
-    height: 5vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 10px 0;
+    height: 100%;
+    overflow-y: auto;
+    .buttons {
+      width: 100%;
+      height: 5vh;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 10px 0;
 
-    .close {
-      width: 30px;
-      height: 30px;
-      background-color: rgba(240, 248, 255, 0);
-      background-image: url("../../../../assets/icons/close.png");
-      background-size: contain;
-      background-repeat: no-repeat;
+      .close {
+        width: 30px;
+        height: 30px;
+        background-color: rgba(240, 248, 255, 0);
+        background-image: url("../../../../assets/icons/close.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      button {
+        width: 15vw;
+        height: 90%;
+        margin: 0;
+      }
     }
-    button {
-      width: 15vw;
-      height: 90%;
-      margin: 0;
+
+    .name {
+      width: 100%;
+      height: 5vh;
+      display: flex;
+      justify-content: space-around;
+
+      input,
+      select {
+        width: 30%;
+        padding: 0;
+        margin: 0;
+        font-size: 21px;
+      }
     }
-  }
 
-  .name {
-    width: 100%;
-    height: 5vh;
-    display: flex;
-    justify-content: space-around;
-
-    input,
-    select {
-      width: 30%;
-      padding: 0;
-      margin: 0;
-      font-size: 21px;
-    }
-  }
-
-  .article_area {
-    width: 100%;
-    height: calc(90vh + 10px);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 20px;
-    padding: 5px;
-    border: 0.5px solid black;
-
-    .article {
-      width: 65%;
-      height: auto;
-      overflow-y: auto;
-      border-right: 0.5px solid gray;
+    .article_area {
+      width: 100%;
+      height: calc(90vh + 10px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 20px;
       padding: 5px;
+      border: 0.5px solid black;
 
-      h1 {
-        width: 100%;
-        text-align: center;
+      .article {
+        width: 65%;
+        height: auto;
+        overflow-y: auto;
+        border-right: 0.5px solid gray;
+        padding: 5px;
+
+        h1 {
+          width: 100%;
+          text-align: center;
+        }
+
+        ul {
+          width: 100%;
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          li {
+            width: 95%;
+            margin: 5px auto;
+            h2 {
+              width: 100%;
+              text-align: center;
+            }
+
+            .description {
+              width: 100%;
+              height: auto;
+              margin: 5px 0;
+              text-align: justify;
+            }
+            .image {
+              width: 100%;
+              height: auto;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              img {
+                width: auto;
+                height: 200px;
+                object-fit: cover;
+                margin-bottom: 10px;
+              }
+            }
+
+            .buttons {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              button {
+                width: 45%;
+                height: 30px;
+                margin: 0;
+                padding: 0;
+                &.edit {
+                  background-color: #eaf203;
+                  color: white;
+                }
+                &.dell {
+                  background-color: #f44336;
+                  color: white;
+                }
+              }
+            }
+          }
+        }
       }
 
-      ul {
-        width: 100%;
-        list-style: none;
+      .form {
+        width: 35%;
+        height: auto;
         display: flex;
         flex-direction: column;
-        li {
-          width: 95%;
-          margin: 5px auto;
-          h2 {
-            width: 100%;
-            text-align: center;
-          }
+        overflow-y: auto;
+        padding: 5px;
 
-          .description {
-            width: 100%;
-            height: auto;
-            margin: 5px 0;
-            text-align: justify;
-          }
+        .text_block {
+          height: 49%;
+          border-bottom: 0.5px solid gray;
+        }
+
+        .image_block {
+          height: 49%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
           .image {
-            width: 100%;
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: auto;
+            height: 200px;
+            overflow: hidden;
+            margin-bottom: 10px;
 
             img {
               width: auto;
-              height: 200px;
+              height: 100%;
               object-fit: cover;
-              margin-bottom: 10px;
             }
           }
 
-          .buttons {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            button {
-              width: 45%;
-              height: 30px;
-              margin: 0;
-              padding: 0;
-              &.edit {
-                background-color: #eaf203;
-                color: white;
-              }
-              &.dell {
-                background-color: #f44336;
-                color: white;
-              }
-            }
+          .btn {
+            height: 30px;
           }
-        }
-      }
-    }
-
-    .form {
-      width: 35%;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      padding: 5px;
-
-      .text_block {
-        height: 49%;
-        border-bottom: 0.5px solid gray;
-      }
-
-      .image_block {
-        height: 49%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        .image {
-          width: auto;
-          height: 200px;
-          overflow: hidden;
-          margin-bottom: 10px;
-
-          img {
-            width: auto;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-
-        .btn {
-          height: 30px;
         }
       }
     }

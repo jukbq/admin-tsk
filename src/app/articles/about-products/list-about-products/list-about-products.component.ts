@@ -39,23 +39,16 @@ export class ListAboutProductsComponent {
     this.aboutProductsService.getAll().subscribe((data: any) => {
       this.aboutProducts = data as AboutProductsResponse[];
       this.aboutProducts.sort((a, b) => a.title.localeCompare(b.title));
-      console.log('Отримані дані про продукти:', this.aboutProducts);
 
     });
   }
 
-  addModal(action: string, object: any): void {
-    const dialogRef = this.dialog.open(AddAboutProductsComponent, {
-      hasBackdrop: true,
-      panelClass: 'custom-dialog-container',
-      data: { action, object },
-    });
+  navigateToAddOrEditCategorie(action: string, object: any): void {
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getAboutProdokta();
+    this.router.navigate(['/add-about-products'], {
+      queryParams: { action, object: JSON.stringify(object) },
     });
   }
-
 
   // Видалення пункту меню
   async delArticle(item: any): Promise<void> {

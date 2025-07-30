@@ -14,6 +14,7 @@ import { ListRecipesComponent } from './recipes/list-recipes/list-recipes.compon
 import { AddRecipeComponent } from './recipes/add-recipe/add-recipe.component';
 import { ListRegionComponent } from './components/list-region/list-region.component';
 import { ListAboutProductsComponent } from './articles/about-products/list-about-products/list-about-products.component';
+import { AddAboutProductsComponent } from './articles/about-products/add-about-products/add-about-products.component';
 
 
 export const routes: Routes = [
@@ -36,6 +37,7 @@ export const routes: Routes = [
       { path: 'rcipe-tyoe', component: ListRecipeTypeComponent },
     ],
   },
-  { path: 'about-products', component: ListAboutProductsComponent }
+  { path: 'about-products', component: ListAboutProductsComponent },
+  { path: 'add-about-products', component: AddAboutProductsComponent },
 
 ];

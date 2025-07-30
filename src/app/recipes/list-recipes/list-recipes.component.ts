@@ -131,6 +131,8 @@ export class ListRecipesComponent {
       queryParams: { action, object: JSON.stringify(object) },
     });
   }
+
+
   openHome() {
     this.router.navigate(['/']);
   }

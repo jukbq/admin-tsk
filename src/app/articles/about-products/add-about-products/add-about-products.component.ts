@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AboutProductsService } from '../../../shared/services/about-products/about-products.service';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { Storage, deleteObject, getDownloadURL, percentage, ref, uploadBytesResumable } from '@angular/fire/storage';
@@ -38,6 +38,10 @@ export class AddAboutProductsComponent {
   slug: string = '';
   articleName: string = '';
   productCategoryName: string = '';
+  seoName: string = '';
+  seoDescription: string = '';
+  keywords: string = '';
+
   slugExists: boolean | null = null;
   paragraphForm!: FormGroup;
 
@@ -55,23 +59,29 @@ export class AddAboutProductsComponent {
 
 
   constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public data: { action: 'add' | 'edit'; object: any },
-    public dialogRef: MatDialogRef<ListAboutProductsComponent>,
+
     private formBuilder: FormBuilder,
-    public dialog: MatDialog,
     private aboutProductsService: AboutProductsService,
     private productCategoruService: ProductCategoryService,
     private storsge: Storage,
+    private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.getProductCategories();
     this.initparagraphForm();
-    if (this.data.action === 'edit') {
-      this.editarticle(this.data.object);
-    }
+    this.route.queryParams.subscribe((params) => {
+
+      /*     const action = params['action'];
+          const object = params['object'] ? JSON.parse(params['object']) : null;
+    
+          if (action === 'edit' && object) {
+            this.article_edit_status = true;
+            this.editarticle(object);
+          } */
+
+    });
   }
 
   // Отримання категорії з сервера
@@ -100,12 +110,12 @@ export class AddAboutProductsComponent {
       this.aboutProductsService
         .editaboutProducts(updatedArticleData, this.articleID as string)
         .then(() => {
-          this.dialogRef.close();
+          this.router.navigate(['/about-products']);
         });
     } else {
       this.aboutProductsService
         .addaboutProducts(updatedArticleData, this.slug.trim().toLowerCase())
-        .then(() => this.dialogRef.close());
+        .then(() => this.router.navigate(['/about-products']));
     }
   }
 
@@ -239,7 +249,7 @@ export class AddAboutProductsComponent {
       productCategoryName: this.productCategoryName,
       articleParagraphs: this.articleParagraphs
     }
-    console.log('doc', doc);
+
 
   }
 
@@ -320,7 +330,8 @@ export class AddAboutProductsComponent {
 
 
   close(): void {
-    this.dialogRef.close();
+    this.router.navigate(['/about-products']);
   }
+
 
 }

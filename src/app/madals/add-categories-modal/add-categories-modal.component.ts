@@ -218,7 +218,6 @@ export class AddCategoriesModalComponent {
 
         try {
           await deleteObject(storageRef); // Видаляємо файл
-          console.log('Файл успішно видалений:', filePath);
           this.uploadPercent = 0;
           this.categoriesDishesForm.patchValue({
             [type === 'main' ? 'image' : 'additionalImage']: null,
