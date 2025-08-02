@@ -1,4 +1,4 @@
-@import "../../../components/styles/table";
+@import "../../components/styles/table";
 
 .form-select {
   width: 50%;
@@ -19,7 +19,7 @@ section {
     position: fixed;
     top: 10px;
     left: 10px;
-    background-image: url("../../../../assets/icons/left.png");
+    background-image: url("../../../assets/icons/left.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-color: white;

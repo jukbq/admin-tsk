@@ -97,7 +97,6 @@ export class ListCategoriesComponent {
   }
 
 
-
   addModal(action: string, object: any): void {
     const dialogRef = this.dialog.open(AddCategoriesModalComponent, {
       hasBackdrop: true,

@@ -40,6 +40,7 @@ import { CategoriesService } from '../../shared/services/categories/categories.s
   templateUrl: './add-dishes-modal.component.html',
   styleUrl: './add-dishes-modal.component.scss',
 })
+
 export class AddDishesModalComponent {
   dishesForm!: FormGroup;
   dishes: any[] = [];

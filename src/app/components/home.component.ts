@@ -29,7 +29,12 @@ const LIST: MenuItem[] = [
   {
     name: 'Статті',
     link: '#',
-    subItems: [{ name: 'Про продукти', link: 'about-products' }],
+
+    subItems: [
+      { name: 'Тип статті', link: 'article-type' },
+      { name: 'Категорія статті', link: 'article-categories' },
+      { name: 'Статті', link: 'list-article-page' }
+    ],
   },
 ];
 

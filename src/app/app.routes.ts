@@ -13,8 +13,10 @@ import { ListRecipeTypeComponent } from './components/list-recipe-type/list-reci
 import { ListRecipesComponent } from './recipes/list-recipes/list-recipes.component';
 import { AddRecipeComponent } from './recipes/add-recipe/add-recipe.component';
 import { ListRegionComponent } from './components/list-region/list-region.component';
-import { ListAboutProductsComponent } from './articles/about-products/list-about-products/list-about-products.component';
-import { AddAboutProductsComponent } from './articles/about-products/add-about-products/add-about-products.component';
+import { ListArticleTypeComponent } from './components/list-article-type/list-article-type.component';
+import { ListArticleCategoriesComponent } from './components/list-article-categories/list-article-categories.component';
+import { AddArticlePageComponent } from './articles/add-article-page/add-article-page.component';
+import { ListArticlePageComponent } from './articles/list-article-page/list-article-page.component';
 
 
 export const routes: Routes = [
@@ -35,9 +37,12 @@ export const routes: Routes = [
       { path: 'units', component: ListUnitsComponent },
       { path: 'tools', component: ListToolsComponent },
       { path: 'rcipe-tyoe', component: ListRecipeTypeComponent },
+      { path: 'article-type', component: ListArticleTypeComponent },
+      { path: 'article-categories', component: ListArticleCategoriesComponent },
+      { path: 'list-article-page', component: ListArticlePageComponent },
+      { path: 'add-article-page', component: AddArticlePageComponent },
     ],
   },
-  { path: 'about-products', component: ListAboutProductsComponent },
-  { path: 'add-about-products', component: AddAboutProductsComponent },
+
 
 ];

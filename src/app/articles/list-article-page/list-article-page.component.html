@@ -1,7 +1,7 @@
 <section>
-  <div class="open" (click)="openHome()"></div>
+  <!--   <div class="open" (click)="openHome()"></div> -->
 
-  <h2>Про продукти</h2>
+  <h2>Статтіи</h2>
 
   <button
     class="btn"
@@ -17,21 +17,24 @@
         <th scope="col">№</th>
         <th scope="col">id</th>
         <th scope="col">Назва</th>
+        <th scope="col">Зображення</th>
         <th scope="col">Дії</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of aboutProducts; let i = index">
+      <tr *ngFor="let item of articlePages; let i = index">
         <td>{{ i + 1 }}</td>
         <td *ngIf="item.id">{{ item.id }}</td>
-        <td>{{ item.paragraphName }}</td>
-
+        <td>{{ item.articleName }}</td>
+        <td class="image">
+          <img [src]="item.mainImage" />
+        </td>
         <td class="btn_tr">
           <div
             class="edit button"
             (click)="navigateToAddOrEditCategorie('edit', item)"
           ></div>
-          <div class="dell button" (click)="delArticle(item)"></div>
+          <!--    <div class="dell button" (click)="delArticle(item)"></div> -->
         </td>
       </tr>
     </tbody>

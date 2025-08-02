@@ -1,0 +1,184 @@
+<section>
+  <div class="buttons">
+    <button type="button" class="btn next" (click)="test()">TEST</button>
+    <button type="button" class="btn next" (click)="creatArticle()">
+      Створити статтю
+    </button>
+    <div class="close" (click)="close()" aria-label="Закрити"></div>
+  </div>
+
+  <!-- Форма для вводу назви статті -->
+  <div class="slug">
+    <input
+      type="text"
+      [(ngModel)]="slug"
+      (input)="slugValid()"
+      name="slug"
+      class="form-control slug"
+      placeholder="*Введи Slug"
+      aria-label="Введи Slug"
+      [readonly]="article_edit_status"
+      [ngClass]="{
+        'is-valid': slugExists === false,
+        'is-invalid': slugExists === true
+      }"
+    />
+  </div>
+
+  <div class="form_block">
+    <form [formGroup]="articlePageForm" class="form_container">
+      <div class="info_area">
+        <div class="select_type">
+          <!--Тип статті-->
+          <select
+            name="articleType"
+            class="form-select"
+            (change)="articlesFiltre($event)"
+          >
+            <option selected disabled>Обрати тип</option>
+
+            @for (type of articleType; track type) {
+            <option [value]="type.id">{{ type.articleTypeName }}</option>
+            }
+          </select>
+
+          <!--Rfntujhsz-->
+          <select
+            formControlName="articleCategory"
+            [compareWith]="compareFn"
+            name="articleCategory"
+            class="form-select"
+          >
+            <option selected disabled>Обрати тип</option>
+            <option
+              [ngValue]="menu"
+              *ngFor="let menu of filterCategoriesArticles"
+            >
+              {{ menu.aticleCategoryName }}
+            </option>
+          </select>
+
+          <select
+            name="productCategoryName"
+            class="form-select"
+            (change)="onCategorySelectionChange($event)"
+          >
+            <option>Обрати катнгорії</option>
+            <option
+              *ngFor="let category of productsCategories"
+              [value]="category.id"
+            >
+              {{ category.productCategoryName }}
+            </option>
+          </select>
+
+          <select
+            formControlName="products"
+            name="products"
+            class="form-select"
+          >
+            <option>Обрати продукт</option>
+            <option
+              *ngFor="let product of filteredProducts"
+              [ngValue]="product"
+            >
+              {{ product.productsName }}
+            </option>
+          </select>
+
+          <input
+            formControlName="articleName"
+            type="text"
+            name="articleName"
+            placeholder="*Введи Назву"
+          />
+        </div>
+
+        <!--Головне зображення-->
+        <div class="input_block mainImage">
+          <p>Головне зображення</p>
+          <div class="progress_line">
+            <div class="progress">
+              <div
+                class="progress-bar progress-bar-striped"
+                role="progressbar"
+                aria-label="Default striped example"
+                [style.width.%]="uploadPercent"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+
+          <div class="image_field">
+            <td *ngIf="mainImage" class="image">
+              <img src="{{ mainImage }}" alt="" />
+            </td>
+
+            <input
+              #fileInput
+              type="file"
+              style="display: none"
+              (change)="uploadImage($event)"
+              accept="image/*"
+            />
+            <button
+              class="overlay btn"
+              type="button"
+              (click)="fileInput.click()"
+            >
+              Змінити зображення
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="data_block seo_block">
+        <h3>SEO</h3>
+        <input
+          formControlName="seoName"
+          type="text"
+          name="seoName"
+          class="form-control"
+          placeholder="*Назва"
+          aria-label="OG Назва"
+        />
+
+        <textarea
+          formControlName="seoDescription"
+          type="text"
+          name="seoDescription"
+          id=""
+          cols="30"
+          rows="10"
+          class="form-control dishDescription"
+          placeholder="SEO опис"
+        ></textarea>
+
+        <textarea
+          class="form-control keywords"
+          type="text"
+          placeholder="Ключові слова"
+          formControlName="keywords"
+          name="keywords"
+        ></textarea>
+      </div>
+      <div class="batton_block">
+        <button type="button" class="btn" (click)="addModal(slug, 'add')">
+          Додати кроки
+        </button>
+        <button type="button" class="btn" (click)="addModal(slug, 'edit')">
+          Редагувати списиок
+        </button>
+      </div>
+    </form>
+  </div>
+  <!--   <h2>ПРИКЛАД СТОРІНКИ</h2>
+  <div class="article_area">
+    <h1>{{ articlePageForm.get("articleName")?.value }}</h1>
+
+    <div class="main_image">
+      <img src="{{ mainImage }}" alt="" />
+    </div>
+  </div> -->
+</section>

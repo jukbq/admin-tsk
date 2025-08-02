@@ -1,0 +1,102 @@
+<section>
+  <div class="top_block">
+    <button class="btn" (click)="save()">Зберегти</button>
+    <button class="btn" (click)="test()">Тест</button>
+  </div>
+  <!-- Основна область статті і вводу контенту -->
+  <div class="article_area">
+    <div class="article">
+      <ul>
+        @for (item of articleParagraphs; track item; let i = $index) {
+        <li>
+          <h2>{{ item.paragraphName }}</h2>
+          <div class="description" [innerHTML]="item.description"></div>
+          <div class="image">
+            <img
+              *ngIf="item.paragraphImage"
+              [src]="item.paragraphImage"
+              alt="{{ item.paragraphName }}"
+            />
+          </div>
+
+          <div class="buttons">
+            <button type="button" class="btn edit" (click)="editParagraph(i)">
+              Редагувати
+            </button>
+            <button type="button" class="btn dell" (click)="delParagraph(i)">
+              Видалити
+            </button>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+    <!-- Форма для додавання або редагування параграфів -->
+    <form [formGroup]="paragraphForm" (ngSubmit)="addParagraph()" class="form">
+      <div class="text_block">
+        <input
+          formControlName="paragraphName"
+          type="text"
+          name="paragraphName"
+          class="form-control"
+          placeholder="*Введіь назву параграфа"
+        />
+
+        <editor
+          class="form-control editor"
+          apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
+          [init]="{ plugins: 'lists link image table code help wordcount' }"
+          [inline]="false"
+          formControlName="description"
+          toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help"
+        >
+        </editor>
+      </div>
+
+      <div class="image_block">
+        <div class="chekbox">
+          <label>
+            <input
+              formControlName="imageSize"
+              type="radio"
+              name="imageSize"
+              value="full"
+            />
+            Велике зображення
+          </label>
+
+          <label>
+            <input
+              formControlName="imageSize"
+              type="radio"
+              name="imageSize"
+              value="small"
+            />
+            Мале зображення
+          </label>
+        </div>
+
+        <div *ngIf="paragraphImage" class="image">
+          <img src="{{ paragraphImage }}" alt="" />
+        </div>
+
+        <input
+          #fileInput
+          type="file"
+          style="display: none"
+          (change)="uploadParagraphImage($event)"
+          accept="image/*"
+        />
+        <button class="overlay btn" type="button" (click)="fileInput.click()">
+          зображення
+        </button>
+      </div>
+
+      <div class="addParagraph">
+        <button type="submit" class="btn">
+          {{ !paragraph_edit_status ? "Додати крок" : "Зберегти" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

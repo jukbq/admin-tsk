@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AboutProductsResponse } from '../../interfaces/about-products';
-import { addDoc, collection, collectionData, CollectionReference, deleteDoc, doc, DocumentData, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
-import { LocalStorageService } from '../local-storage/local-storage.service';
-import { deleteObject, getStorage, listAll, ref, Storage } from '@angular/fire/storage';
+import { AboutProductsResponse } from '../../../interfaces/about-products';
+import { collection, collectionData, CollectionReference, deleteDoc, doc, DocumentData, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { LocalStorageService } from '../../local-storage/local-storage.service';
+import { Storage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AboutProductsService {
   private aboutProductsCollection!: CollectionReference<DocumentData>;
+
 
   constructor(
     private afs: Firestore,

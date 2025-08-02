@@ -18,36 +18,36 @@
   />
 
   <form
-    [formGroup]="categoriesDishesForm"
+    [formGroup]="articleCategoriesForm"
     (ngSubmit)="creatCategories()"
     class="form_container"
   >
     <div class="input_section">
       <div class="data_block content_block">
         <select
-          formControlName="dishes"
+          formControlName="articleType"
           [compareWith]="compareFn"
-          name="dishes"
+          name="articleType"
           class="form-select"
         >
-          <option [ngValue]="menu" *ngFor="let menu of dishes">
-            {{ menu.dishesName }}
+          <option [ngValue]="menu" *ngFor="let menu of type">
+            {{ menu.articleTypeName }}
           </option>
         </select>
 
         <input
-          formControlName="categoryIndex"
+          formControlName="aticleCategoryIndex"
           type="number"
-          name="categoryIndex"
+          name="aticleCategoryIndex"
           class="form-control"
           placeholder="*Порядок категорії"
           aria-label="Порядок категорії"
         />
 
         <input
-          formControlName="categoryName"
+          formControlName="aticleCategoryName"
           type="text"
-          name="categoryName"
+          name="aticleCategoryName"
           class="form-control"
           placeholder="*Назва"
           aria-label="Назва"
@@ -58,7 +58,7 @@
             apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
             [init]="{ plugins: 'lists link image table code help wordcount' }"
             [inline]="false"
-            formControlName="categoryDescription"
+            formControlName="aticleCategoryDescription"
             toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help"
           >
           </editor>
@@ -68,16 +68,16 @@
       <div class="data_block seo_block">
         <h3>SEO</h3>
         <input
-          formControlName="seoCategoryName"
+          formControlName="seoAticleCategoryName"
           type="text"
-          name="seoCategoryName"
+          name="seoAticleCategoryName"
           class="form-control"
           placeholder="*Назва"
           aria-seoname="OG Назва"
         />
         <textarea
-          formControlName="seoCategoryDescription"
-          name="seoCategoryDescription"
+          formControlName="seoAticleCategoryDescription"
+          name="seoAticleCategoryDescription"
           id=""
           cols="30"
           rows="10"
@@ -147,6 +147,7 @@
     </div>
     <div class="batton_section">
       <button type="submit" class="btn">Зберегти</button>
+      <button type="button" class="btn next" (click)="test()">TEST</button>
     </div>
   </form>
 </section>

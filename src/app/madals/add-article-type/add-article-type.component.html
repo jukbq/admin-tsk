@@ -1,7 +1,7 @@
 <section>
   <div class="close" (click)="close()" aria-label="Закрити"></div>
 
-  <div class="title">Додати категорію</div>
+  <div class="title">Додати тип статті</div>
 
   <input
     type="text"
@@ -18,39 +18,28 @@
   />
 
   <form
-    [formGroup]="categoriesDishesForm"
-    (ngSubmit)="creatCategories()"
+    [formGroup]="articleTypeForm"
+    (ngSubmit)="creatArticleType()"
     class="form_container"
   >
     <div class="input_section">
       <div class="data_block content_block">
-        <select
-          formControlName="dishes"
-          [compareWith]="compareFn"
-          name="dishes"
-          class="form-select"
-        >
-          <option [ngValue]="menu" *ngFor="let menu of dishes">
-            {{ menu.dishesName }}
-          </option>
-        </select>
-
         <input
-          formControlName="categoryIndex"
+          formControlName="articleTypeindex"
           type="number"
-          name="categoryIndex"
+          name="articleTypeindex"
           class="form-control"
           placeholder="*Порядок категорії"
-          aria-label="Порядок категорії"
+          aria-label="Порядок Страви"
         />
 
         <input
-          formControlName="categoryName"
+          formControlName="articleTypeName"
           type="text"
-          name="categoryName"
+          name="articleTypeName"
           class="form-control"
-          placeholder="*Назва"
-          aria-label="Назва"
+          placeholder="*Повна назва"
+          aria-label="Повна назва"
         />
 
         <div class="input">
@@ -58,7 +47,7 @@
             apiKey="1uomiyk9g2yxiild52n2wb54b7izjzi75n8vwjkx5jlikh6n"
             [init]="{ plugins: 'lists link image table code help wordcount' }"
             [inline]="false"
-            formControlName="categoryDescription"
+            formControlName="articleTypeDescription"
             toolbar="bold italic underline | formatpainter | aligncenter alignleft alignright alignjustify | selectall | ltr rtl | code | help"
           >
           </editor>
@@ -68,28 +57,31 @@
       <div class="data_block seo_block">
         <h3>SEO</h3>
         <input
-          formControlName="seoCategoryName"
+          formControlName="seoName"
           type="text"
-          name="seoCategoryName"
+          name="seoName"
           class="form-control"
           placeholder="*Назва"
-          aria-seoname="OG Назва"
+          aria-label="OG Назва"
         />
+
         <textarea
-          formControlName="seoCategoryDescription"
-          name="seoCategoryDescription"
+          formControlName="seoDescription"
+          type="text"
+          name="seoDescription"
           id=""
           cols="30"
           rows="10"
           class="form-control dishDescription"
           placeholder="SEO опис"
         ></textarea>
+
         <textarea
           class="form-control keywords"
+          type="text"
           placeholder="Ключові слова"
           formControlName="keywords"
           name="keywords"
-          id=""
         ></textarea>
       </div>
 
@@ -108,8 +100,8 @@
         </div>
 
         <div class="image_field">
-          <td *ngIf="categoryImage" class="image">
-            <img src="{{ categoryImage }}" alt="" />
+          <td *ngIf="articleTypeImage" class="image">
+            <img src="{{ articleTypeImage }}" alt="" />
           </td>
 
           <input
@@ -145,6 +137,7 @@
         </div>
       </div>
     </div>
+
     <div class="batton_section">
       <button type="submit" class="btn">Зберегти</button>
     </div>

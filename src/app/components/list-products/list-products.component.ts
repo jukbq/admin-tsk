@@ -84,6 +84,7 @@ export class ListProductsComponent {
     });
   }
 
+
   // Видалення категорію
   delProducts(index: ProductsResponse) {
     const task = ref(this.storsgeIcon, index.productsImages);

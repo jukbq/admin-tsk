@@ -58,7 +58,6 @@ export class AddCategoriesModalComponent {
     private storsgeIcon: Storage,
     private dishesService: DishesService,
     private categoryService: CategoriesService,
-    private recipesService: RecipesService,
     private recipeService: RecipesService,
     public dialogRef: MatDialogRef<AddCategoriesModalComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -303,7 +302,7 @@ export class AddCategoriesModalComponent {
       return;
     }
 
-    const docSnap = await this.recipesService.checkSlugExistsOnce(trimmed);
+    const docSnap = await this.recipeService.checkSlugExistsOnce(trimmed);
     this.slugExists = docSnap.exists();
 
     if (this.slugExists) {

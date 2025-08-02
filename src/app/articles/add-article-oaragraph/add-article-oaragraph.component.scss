@@ -1,0 +1,148 @@
+@import "../../shared/styles/input_style";
+@import "../../shared/styles/base-styles";
+
+section {
+  width: 100vw;
+  height: 100vh;
+  padding: 3vh;
+  display: flex;
+  flex-direction: column;
+
+  .top_block {
+    width: 100%;
+    height: 9vh;
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+  }
+
+  .article_area {
+    width: 100%;
+    height: calc(90vh + 10px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 5px;
+    border: 0.5px solid black;
+
+    .article {
+      width: 65%;
+      height: auto;
+      overflow-y: auto;
+      border-right: 0.5px solid gray;
+      padding: 5px;
+
+      h1 {
+        width: 100%;
+        text-align: center;
+      }
+
+      ul {
+        width: 100%;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        li {
+          width: 95%;
+          margin: 5px auto;
+          h2 {
+            width: 100%;
+            text-align: center;
+          }
+
+          .description {
+            width: 100%;
+            height: auto;
+            margin: 5px 0;
+            text-align: justify;
+          }
+          .image {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              width: auto;
+              height: 200px;
+              object-fit: cover;
+              margin-bottom: 10px;
+            }
+          }
+
+          .buttons {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button {
+              width: 45%;
+              height: 30px;
+              margin: 0;
+              padding: 0;
+              &.edit {
+                background-color: #eaf203;
+                color: white;
+              }
+              &.dell {
+                background-color: #f44336;
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .form {
+      width: 35%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      padding: 5px;
+
+      .text_block {
+        width: 100%;
+        height: auto;
+        border-bottom: 0.5px solid gray;
+      }
+
+      .image_block {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .image {
+          width: auto;
+          height: 200px;
+          overflow: hidden;
+          margin-bottom: 10px;
+
+          img {
+            width: auto;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .btn {
+          height: 30px;
+        }
+      }
+    }
+
+    .batton_block {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}

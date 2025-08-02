@@ -85,6 +85,7 @@ const season: any[] = [
   templateUrl: './add-recipe.component.html',
   styleUrl: './add-recipe.component.scss',
 })
+
 export class AddRecipeComponent {
   edit_status = false;
   recipesForm!: FormGroup;
@@ -430,6 +431,7 @@ export class AddRecipeComponent {
     this.edit_status = true;
     this.recipeID = recipe.id;
   }
+
 
   // Відкриття модального вікна для додавання або редагування адреси
   addModal(action: string, object: any): void {

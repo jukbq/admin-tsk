@@ -1,0 +1,63 @@
+<section>
+  <h2>Категорії статтей</h2>
+
+  <button class="btn" type="button" (click)="addModal('add', 0)">
+    Додати категорію статті
+  </button>
+
+  <select
+    class="form-select"
+    aria-label="Default select example"
+    (change)="articlesFiltre($event)"
+  >
+    <option selected disabled>Обрати тип</option>
+    <option value="all">Всі</option>
+    @for (type of articleType; track type) {
+    <option [value]="type.id">{{ type.articleTypeName }}</option>
+    }
+  </select>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Індекс</th>
+        <th scope="col">тип</th>
+        <th scope="col">Назва категорії</th>
+        <th scope="col">Зображення</th>
+        <th scope="col">Дії</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="!filter">
+      <tr *ngFor="let category of articleCategories; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ category.id }}</td>
+        <td>{{ category.articleType.articleTypeName }}</td>
+        <td>{{ category.aticleCategoryName }}</td>
+        <td class="image">
+          <img [src]="category.image" />
+        </td>
+        <td class="btn_tr">
+          <div class="edit button" (click)="addModal('edit', category)"></div>
+          <div class="dell button" (click)="delArticleCategori(category)"></div>
+        </td>
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="filter">
+      <tr *ngFor="let category of filterCategoriesArticles; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ category.id }}</td>
+        <td>{{ category.articleType.articleTypeName }}</td>
+        <td>{{ category.aticleCategoryName }}</td>
+        <td class="image">
+          <img [src]="category.image" />
+        </td>
+        <td class="btn_tr">
+          <div class="edit button" (click)="addModal('edit', category)"></div>
+          <div class="dell button" (click)="delArticleCategori(category)"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
