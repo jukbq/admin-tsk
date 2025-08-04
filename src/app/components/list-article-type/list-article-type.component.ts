@@ -33,10 +33,7 @@ export class ListArticleTypeComponent {
   // Отримання даних з сервера
   getArticleType(): void {
     this.articleTypeService.getAll().subscribe((data: any) => {
-
       this.articleType = data as ArticleTypeResponse[];
-
-
     });
   }
 

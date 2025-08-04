@@ -1,37 +1,33 @@
-<!-- <section>
+<section>
+  <h2>Страви</h2>
 
-    <h2>Страви</h2>
+  <button class="btn" (click)="addModal('add', 0)" type="button">
+    ДОДАТИ СТРАВИ
+  </button>
 
-    <button class="btn" (click)="addModal('add', 0)" type="button">
-        ДОДАТИ СТРАВИ
-    </button>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">№</th>
-                <th scope="col">Індекс</th>
-                <th scope="col">Назва</th>
-                <th scope="col">Картинка</th>
-                <th scope="col">Дії</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let dishes of dishes; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ dishes.id}}</td>
-                <td>{{dishes.dishesName}}</td>
-                <td class="image">
-                    <img [src]="dishes.image" />
-                </td>
-                <td class="btn_tr">
-                    <div class="edit button" (click)="addModal('edit',dishes)"></div>
-                    <div class="dell button" (click)="delDishes(dishes)"></div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-
-
-</section> -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Індекс</th>
+        <th scope="col">Назва</th>
+        <th scope="col">Картинка</th>
+        <th scope="col">Дії</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dishes of dishes; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ dishes.id }}</td>
+        <td>{{ dishes.dishesName }}</td>
+        <td class="image">
+          <img [src]="dishes.image" />
+        </td>
+        <td class="btn_tr">
+          <div class="edit button" (click)="addModal('edit', dishes)"></div>
+          <div class="dell button" (click)="delDishes(dishes)"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
