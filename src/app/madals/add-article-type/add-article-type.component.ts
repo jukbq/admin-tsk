@@ -94,8 +94,6 @@ export class AddArticleTypeComponent {
       image: articleType.image,
       additionalImage: articleType.additionalImage,
     });
-    console.log(this.articleTypeForm.value);
-
     this.articleTypeImage = articleType.image;
     this.additionalImage = articleType.additionalImage;
     this.articleTypes_edit_status = true;

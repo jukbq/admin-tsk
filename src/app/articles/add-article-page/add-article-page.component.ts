@@ -252,8 +252,6 @@ export class AddArticlePageComponent {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.articleContent = result.articleContent;
-          console.log(this.articleContent);
-
         }
       });
     } else {

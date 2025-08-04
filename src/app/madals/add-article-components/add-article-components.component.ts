@@ -85,9 +85,6 @@ export class AddArticleComponentsComponent {
       slug: [null],
       numberСategories: [null]
     });
-
-    console.log(this.articleCategoriesForm.value);
-
   }
 
 

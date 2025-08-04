@@ -32,8 +32,6 @@ export class DisheListComponent {
   getDishes(): void {
     this.dishesService.getAll().subscribe((data: any) => {
       this.dishes = data as DishesResponse[];
-      console.log(this.dishes);
-
     });
   }
 

@@ -34,8 +34,6 @@ export class ListArticlePageComponent {
     this.articlePageService.getAll().subscribe((data: any) => {
       this.articlePages = data
       this.articlePages.sort((a, b) => a.title.localeCompare(b.title));
-      console.log(this.articlePages);
-
     })
   }
 

@@ -39,8 +39,6 @@ export class ListCategoriesComponent {
   getDishes(): void {
     this.dishesService.getAll().subscribe((data: any) => {
       this.dishes = data as DishesResponse[];
-      console.log(this.dishes);
-
     });
   }
 
@@ -78,8 +76,6 @@ export class ListCategoriesComponent {
       this.categoriesDishes.sort((a, b) =>
         a.categoryName.localeCompare(b.categoryName)
       );
-      console.log(this.categoriesDishes);
-
     });
   }
 
