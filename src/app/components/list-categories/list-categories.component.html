@@ -32,7 +32,7 @@
       <tr *ngFor="let categori of categoriesDishes; let i = index">
         <td>{{ i + 1 }}</td>
         <td>{{ categori?.id }}</td>
-        <td>{{ categori.dishes?.dishesName }}</td>
+        <td>{{ categori.dishes.dishesName }}</td>
         <td>{{ categori?.categoryName }}</td>
         <td class="image">
           <img [src]="categori.image" />

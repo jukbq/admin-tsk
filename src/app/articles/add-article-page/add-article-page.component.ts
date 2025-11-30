@@ -47,7 +47,7 @@ export class AddArticlePageComponent {
   mainImage = '';
 
 
-  articlePageID = '';
+ /*  articlePageID = ''; */
 
   filteredProducts: any[] = [];
   products: any[] = [];
@@ -220,8 +220,9 @@ export class AddArticlePageComponent {
 
   // Відкриття модального вікна для додавання або редагування адреси
   addModal(slug: string, object: any): void {
+   
 
-    if (object === 'add') {
+ if (object === 'add') {
       const dialogRef = this.dialog.open(AddArticleOaragraphComponent, {
         hasBackdrop: true,
         panelClass: 'custom-dialog-container',
@@ -231,27 +232,30 @@ export class AddArticlePageComponent {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
 
-          this.articleContent = result.articleParagraphs;
+          this.articleContent = result.articleContent;
           this.articlePageForm.patchValue({
             articleContent: this.articleContent,
           });
 
         }
       });
-    } else if (object === 'edit' && this.articleContent.length > 0) {
+    } else if (object === 'edit') {
       const dialogRef = this.dialog.open(AddArticleOaragraphComponent, {
         hasBackdrop: true,
         panelClass: 'custom-dialog-container',
         data: {
           object,
-          articleContent: this.articleContent,
-          slug: slug
+          articleContent: this.articleContent || [],
+          slug: slug,
         },
-
+           
       });
+       
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.articleContent = result.articleContent;
+          console.log(this.articleContent);
+          
         }
       });
     } else {
@@ -264,10 +268,11 @@ export class AddArticlePageComponent {
     }
 
 
-
   }
 
   editRecipe(article: ArticlePAgesResponse) {
+   
+    
     this.articlePageForm.patchValue({
       slug: article.slug,
       articleCategory: article.articleCategory,
@@ -280,7 +285,11 @@ export class AddArticlePageComponent {
       articleContent: article.articleContent,
 
     });
+
+    this.slug = article.slug as string
+       
     this.articleContent = article.articleContent;
+
     this.articleName = article.articleName;
     this.mainImage = article.mainImage;
 
@@ -293,7 +302,7 @@ export class AddArticlePageComponent {
 
     if (this.article_edit_status == true) {
       this.articlePageService
-        .editArticlePage(this.articlePageForm.value, this.articlePageID as string)
+        .editArticlePage(this.articlePageForm.value, this.slug)
         .then(() => {
           this.close();
         });

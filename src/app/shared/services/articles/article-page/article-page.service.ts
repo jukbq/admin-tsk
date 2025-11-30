@@ -30,7 +30,7 @@ export class ArticlePageService {
   }
 
   editArticlePage(articlePage: ArticlePAgesResponse, id: string) {
-    const aarticlePageDocumentReference = doc(this.afs, `article-page/${id}`);
+    const aarticlePageDocumentReference = doc(this.afs, `article-pages/${id}`);
     return updateDoc(aarticlePageDocumentReference, { ...articlePage });
   }
 

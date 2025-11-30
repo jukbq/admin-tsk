@@ -164,11 +164,11 @@
         ></textarea>
       </div>
       <div class="batton_block">
-        <button type="button" class="btn" (click)="addModal(slug, 'add')">
-          Додати кроки
+        <button *ngIf="!article_edit_status" type="button" class="btn" (click)="addModal(slug, 'add')">
+          Додати абзаци
         </button>
-        <button type="button" class="btn" (click)="addModal(slug, 'edit')">
-          Редагувати списиок
+        <button *ngIf="article_edit_status"  type="button" class="btn" (click)="addModal(slug, 'edit')">
+          Редагувати абзаци
         </button>
       </div>
     </form>
