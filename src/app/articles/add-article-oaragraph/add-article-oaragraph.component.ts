@@ -62,6 +62,7 @@ export class AddArticleOaragraphComponent {
       imageSize: [null],
       recipeID: [null],
       recipeName: [null],
+      mainImage: [null],
     });
   }
 
@@ -74,6 +75,7 @@ export class AddArticleOaragraphComponent {
       const editedParagraphImage = this.paragraphImage;
       const editedRecipeID = this.paragraphForm.value.recipeID;
       const editedRecipeName = this.paragraphForm.value.recipeName;
+      const editedMainImage = this.paragraphForm.value.mainImage;
 
       // Оновлення значень у відповідному об'єкті масиву instructions
       this.articleContent[this.pIndex].paragraphName = editedParagraphName;
@@ -81,6 +83,7 @@ export class AddArticleOaragraphComponent {
       this.articleContent[this.pIndex].imageSize = editedimageSize;
       this.articleContent[this.pIndex].paragraphImage = editedParagraphImage;
       this.articleContent[this.pIndex].recipeID = editedRecipeID;
+      this.articleContent[this.pIndex].mainImage = editedMainImage;
       this.articleContent[this.pIndex].recipeName = editedRecipeName;
 
       // Очищення даних у формах після редагування
@@ -93,6 +96,7 @@ export class AddArticleOaragraphComponent {
         imageSize: this.paragraphForm.value.imageSize,
         recipeID: this.paragraphForm.value.recipeID,
         recipeName: this.paragraphForm.value.recipeName,
+        mainImage: this.paragraphForm.value.mainImage,
         paragraphImage: this.paragraphImage,
       };
 
@@ -119,6 +123,7 @@ export class AddArticleOaragraphComponent {
       imageSize: this.articleContent[i].imageSize || '',
       recipeID: this.articleContent[i].recipeID || '',
       recipeName: this.articleContent[i].recipeName || '',
+      mainImage: this.articleContent[i].mainImage || '',
     });
   }
 
@@ -202,6 +207,7 @@ export class AddArticleOaragraphComponent {
     this.paragraphForm.patchValue({
       recipeID: recipeData.id,
       recipeName: recipeData.recipeTitle,
+      mainImage: recipeData.mainImage,
     });
 
     this.query = '';
