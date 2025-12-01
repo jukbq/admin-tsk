@@ -21,6 +21,7 @@ import {
 import { Firestore } from '@angular/fire/firestore';
 import { ProductCategoryResponse } from '../../shared/interfaces/productCategory';
 import { ProductsResponse } from '../../shared/interfaces/products';
+import { ArticlePageService } from '../../shared/services/articles/article-page/article-page.service';
 
 @Component({
   selector: 'app-add-product',
@@ -32,26 +33,27 @@ import { ProductsResponse } from '../../shared/interfaces/products';
 export class AddProductComponent {
   productsImages: string | undefined;
   allRecipes: any[] = [];
-  searchResults: any[] = [];
+  recipesResults: any[] = [];
+  articlesResults: any[] = [];
   products: any[] = [];
   productsForm!: FormGroup;
   productsCategories: any[] = [];
   uploadPercent!: number;
   productses_edit_status = false;
   productsID!: number | string;
-  query: string = '';
 
   constructor(
     private productCategoruService: ProductCategoryService,
     private formBuild: FormBuilder,
     private storsgeIcon: Storage,
     private recipeService: RecipesService,
+    private articlePageService: ArticlePageService,
     private productsService: ProductsService,
     public dialogRef: MatDialogRef<AddProductComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: { action: 'add' | 'edit'; object: any },
     private afs: Firestore
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initpPoductsForm();
@@ -62,7 +64,6 @@ export class AddProductComponent {
     }
   }
 
-
   // Ініціалізація форми продуктів
   initpPoductsForm(): void {
     this.productsForm = this.formBuild.group({
@@ -72,7 +73,8 @@ export class AddProductComponent {
       productsImages: [null],
       recipeID: [null],
       recipeName: [null],
-      articleList: [null],
+      articleID: [null],
+      articleName: [null],
     });
   }
 
@@ -105,7 +107,8 @@ export class AddProductComponent {
       productsImages: products.productsImages,
       recipeID: products.recipeID,
       recipeName: products.recipeName,
-      articleList: products.articleList,
+      articleID: products.articleID,
+      articleName: products.articleName,
     });
 
     this.productsImages = products.productsImages;
@@ -116,17 +119,16 @@ export class AddProductComponent {
   selectRecipe(recipeData: any) {
     this.productsForm.patchValue({
       recipeID: recipeData.id,
-      recipeName: recipeData.recipeTitle
-
+      recipeName: recipeData.recipeTitle,
     });
-
-
-
-
-    this.query = '';
-    /*     this.searchResults = []; */
   }
 
+  selectArticle(articleData: any) {
+    this.productsForm.patchValue({
+      articleID: articleData.slug,
+      articleName: articleData.articleName,
+    });
+  }
 
   compareFn(c1: ProductsResponse, c2: ProductsResponse): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
@@ -137,58 +139,52 @@ export class AddProductComponent {
     const productID = this.productsID as string;
     const updatedProductData = this.productsForm.value;
 
-
     if (this.productses_edit_status) {
-      this.recipeService.getRecipesByFilter({ productID: productID }).then((recipes: any[]) => {
-        // Перебираємо знайдені рецепти
+      this.recipeService
+        .getRecipesByFilter({ productID: productID })
+        .then((recipes: any[]) => {
+          // Перебираємо знайдені рецепти
 
-        recipes.forEach((recipe) => {
-          // Перебираємо всі інгредієнти та групи в рецепті, щоб знайти та оновити продукт
-          recipe.ingredients.forEach((ingredient: any) => {
-            ingredient.group.forEach((groupItem: any) => {
-              if (groupItem.selectedProduct.id === productID) {
-                // Оновлюємо дані продукту у рецепті
+          recipes.forEach((recipe) => {
+            // Перебираємо всі інгредієнти та групи в рецепті, щоб знайти та оновити продукт
+            recipe.ingredients.forEach((ingredient: any) => {
+              ingredient.group.forEach((groupItem: any) => {
+                if (groupItem.selectedProduct.id === productID) {
+                  // Оновлюємо дані продукту у рецепті
 
-                groupItem.selectedProduct = {
-                  ...groupItem.selectedProduct,
-                  productsName: updatedProductData.productsName,
-                  productsCalories: updatedProductData.productsCalories,
-                  productsImages: updatedProductData.productsImages,
-                  recipeID: updatedProductData.recipeID,
-                  recipeName: updatedProductData.recipeName,
-                  articleList: updatedProductData.articleList,
-                };
-
-
-
-              }
+                  groupItem.selectedProduct = {
+                    ...groupItem.selectedProduct,
+                    productsName: updatedProductData.productsName,
+                    productsCalories: updatedProductData.productsCalories,
+                    productsImages: updatedProductData.productsImages,
+                    recipeID: updatedProductData.recipeID,
+                    recipeName: updatedProductData.recipeName,
+                    articleID: updatedProductData.articleID,
+                    articleName: updatedProductData.articleName,
+                  };
+                }
+              });
             });
+            // Оновлюємо рецепт після внесення змін
+            this.recipeService.editrecipes(recipe, recipe.id);
           });
-          // Оновлюємо рецепт після внесення змін
-          this.recipeService.editrecipes(recipe, recipe.id);
-
         });
-      });
 
       this.productsService.editproducts(
         this.productsForm.value,
         this.productsID as string
       );
-
     } else {
       this.productsService.addProducts(this.productsForm.value);
     }
     this.dialogRef.close();
   }
 
-
   // Завантаження зображення
   async uploadImage(event: any): Promise<void> {
     const file = event.target.files[0];
     const previousImageURL = this.productsImages; // Поточне зображення
     const task = ref(this.storsgeIcon, previousImageURL);
-
-
 
     // Видалення попереднього зображення, якщо воно існує в Firebase Storage
     if (
@@ -241,14 +237,30 @@ export class AddProductComponent {
   }
 
   //Пошук рецепта
-  onSearch(): void {
-    if (this.query.length >= 3) {
-      this.recipeService.searchRecipes(this.query).subscribe((results) => {
+  onRecipeSearch(): void {
+    const query = this.productsForm.get('recipeName')?.value || '';
+
+    if (query.length >= 3) {
+      this.recipeService.searchRecipes(query).subscribe((results) => {
         this.allRecipes = results;
-        this.searchResults = this.allRecipes;
+        this.recipesResults = this.allRecipes;
       });
     } else {
-      this.searchResults = [];
+      this.recipesResults = [];
+    }
+  }
+
+  //Пошук статті
+  onArticleSearch(): void {
+    const query = this.productsForm.get('articleName')?.value || '';
+
+    if (query.length >= 3) {
+      this.articlePageService.searchArticles(query).subscribe((results) => {
+        this.allRecipes = results;
+        this.articlesResults = this.allRecipes;
+      });
+    } else {
+      this.articlesResults = [];
     }
   }
 

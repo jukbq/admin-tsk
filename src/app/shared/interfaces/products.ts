@@ -7,7 +7,8 @@ export interface ProductsRequest {
   productsImages: string;
   recipeID: string;
   recipeName: string;
-  articleList: string;
+  articleID: string;
+  articleName: string;
 }
 export interface ProductsResponse extends ProductsRequest {
   id: number | string;

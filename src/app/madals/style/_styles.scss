@@ -66,6 +66,7 @@ section {
         .is-valid {
           border: 1px solid green;
         }
+
         .is-invalid {
           border: 1px solid red;
         }
@@ -119,7 +120,8 @@ section {
         }
       }
 
-      .recipe_select {
+      .recipe_select,
+      .article_select {
         width: 100%;
 
         input {

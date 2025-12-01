@@ -6,48 +6,70 @@
   <form
     [formGroup]="productsForm"
     (ngSubmit)="creatProducts()"
-    class="form_container"
-  >
+    class="form_container">
     <div
       class="input_section"
-      style="justify-content: space-around; align-items: center"
-    >
+      style="justify-content: space-around; align-items: center">
       <div class="data_block content_block">
+
+        <!--Категорія продуктів-->
         <select
           formControlName="productsCategory"
           [compareWith]="compareFn"
           name="productsCategory"
-          class="form-select"
-        >
+          class="form-select">
           <option [ngValue]="item" *ngFor="let item of productsCategories">
             {{ item.productCategoryName }}
           </option>
         </select>
 
+
+ <!--Назва-->
         <input
           formControlName="productsName"
           type="text"
           name="productsName"
           class="form-control"
           placeholder="*Назва"
-          aria-label="Назва"
-        />
+          aria-label="Назва" />
+
+        <!--Вибір рецепту-->
         <div class="recipe_select">
-          <h3>Вибір страви</h3>
+          <h2>Вибір статті</h2>
           <input
             formControlName="recipeName"
             type="text"
-            [(ngModel)]="query"
-            (input)="onSearch()"
+            (input)="onRecipeSearch()"
             placeholder="Пошук рецептів..."
-            class="search-input"
-          />
-          <ul *ngIf="searchResults.length > 0" class="recipes_list">
-            @for (recipeList of searchResults; track recipeList) {
+            class="search-input" />
+          <ul *ngIf="recipesResults.length > 0" class="recipes_list">
+            @for (recipeList of recipesResults; track recipeList) {
             <li class="recipe_card">
               <div class="recipe_name">
                 <p (click)="selectRecipe(recipeList)">
                   {{ recipeList.recipeTitle }}
+                </p>
+              </div>
+            </li>
+            }
+          </ul>
+        </div>
+
+        <!--Вибір статті-->
+       <div class="article_select">
+          <h2>Вибір статті</h2>
+          <input
+            formControlName="articleName"
+            type="text"
+            (input)="onArticleSearch()"
+            placeholder="Пошук статті..."
+            class="search-input" />
+          <ul *ngIf="articlesResults.length > 0" class="recipes_list">
+            @for (articleData of articlesResults; track articleData) {
+            <li class="recipe_card">
+              <div class="recipe_name">
+                <p (click)="selectRecipe(articleData)">
+                  {{ articleData.articleName }}
                 </p>
               </div>
             </li>
@@ -62,8 +84,7 @@
           name="productsCalories"
           class="form-control"
           placeholder="*Калорії"
-          aria-label="Калорії"
-        />
+          aria-label="Калорії" />
       </div>
 
       <div class="data_block image_block">
@@ -75,14 +96,13 @@
               aria-label="Default striped example"
               [style.width.%]="uploadPercent"
               aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
+              aria-valuemax="100"></div>
           </div>
         </div>
 
         <div class="image_field">
           <td *ngIf="productsImages" class="image">
-            <img src="{{ productsImages }}" alt="" />
+            <img src="{{ productsImages }}" alt />
           </td>
 
           <input
@@ -90,8 +110,7 @@
             type="file"
             style="display: none"
             (change)="uploadImage($event)"
-            accept="image/*"
-          />
+            accept="image/*" />
           <button class="overlay btn" type="button" (click)="fileInput.click()">
             Змінити зображення
           </button>
