@@ -47,6 +47,7 @@ import { AddInsyructionComponent } from '../../madals/add-insyruction/add-insyru
 import { AddIngredientsComponent } from '../../madals/add-ingredients/add-ingredients.component';
 import { RecipesResponse } from '../../shared/interfaces/recipes';
 import { RegionRequest } from '../../shared/interfaces/region';
+import { ArticlePageService } from '../../shared/services/articles/article-page/article-page.service';
 
 interface categoryFilter {
   id: number | string;
@@ -85,7 +86,6 @@ const season: any[] = [
   templateUrl: './add-recipe.component.html',
   styleUrl: './add-recipe.component.scss',
 })
-
 export class AddRecipeComponent {
   edit_status = false;
   recipesForm!: FormGroup;
@@ -105,7 +105,6 @@ export class AddRecipeComponent {
   numberCalories = 1;
   ingredients: any = [];
 
-
   //ФіЛТР
   filterCategoriesDishes: Array<categoryFilter> = [];
   regionFilter: Array<RegionRequest> = [];
@@ -118,10 +117,13 @@ export class AddRecipeComponent {
   //Приватне
   private recipeID!: number | string;
 
-
   slug: string = '';
   slugExists: boolean | null = null;
 
+  //додаткові матеріали
+  allRecipes: any[] = [];
+  recipesResults: any[] = [];
+  articlesResults: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -135,8 +137,9 @@ export class AddRecipeComponent {
     private storsge: Storage,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private articlePageService: ArticlePageService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initRecipeForm();
@@ -151,7 +154,6 @@ export class AddRecipeComponent {
     this.route.queryParams.subscribe((params) => {
       const action = params['action'];
       const object = params['object'] ? JSON.parse(params['object']) : null;
-
 
       if (action === 'edit' && object) {
         this.edit_status = true;
@@ -203,9 +205,14 @@ export class AddRecipeComponent {
       advice: [null],
       videoUrl: [null],
       comments: [null],
+
+      //Додаткові матеріали
+      adRecipeID: [null],
+      recipeName: [null],
+      articleID: [null],
+      articleName: [null],
     });
   }
-
 
   //Отримання списку страв
   getDishes(): void {
@@ -260,34 +267,63 @@ export class AddRecipeComponent {
   }
 
   onCategoriSelection() {
-    const category =
-      this.recipesForm.value.categoriesDishes.categoryName;
-    this.recipeCategoryName = this.convertToSlug(category)
+    const category = this.recipesForm.value.categoriesDishes.categoryName;
+    this.recipeCategoryName = this.convertToSlug(category);
   }
-
 
   convertToSlug(text: string): string {
     // Мапа для конвертації кириличних літер в латиницю
     const translitMap: { [key: string]: string } = {
-      а: 'a', б: 'b', в: 'v', г: 'h', д: 'd', е: 'e', є: 'ye', ж: 'zh', з: 'z',
-      и: 'y', і: 'i', ї: 'yi', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o',
-      п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'kh', ц: 'ts', ч: 'ch',
-      ш: 'sh', щ: 'shch', ь: '', ю: 'yu', я: 'ya', ' ': '-',
+      а: 'a',
+      б: 'b',
+      в: 'v',
+      г: 'h',
+      д: 'd',
+      е: 'e',
+      є: 'ye',
+      ж: 'zh',
+      з: 'z',
+      и: 'y',
+      і: 'i',
+      ї: 'yi',
+      й: 'y',
+      к: 'k',
+      л: 'l',
+      м: 'm',
+      н: 'n',
+      о: 'o',
+      п: 'p',
+      р: 'r',
+      с: 's',
+      т: 't',
+      у: 'u',
+      ф: 'f',
+      х: 'kh',
+      ц: 'ts',
+      ч: 'ch',
+      ш: 'sh',
+      щ: 'shch',
+      ь: '',
+      ю: 'yu',
+      я: 'ya',
+      ' ': '-',
     };
 
     // Перетворюємо текст
-    return text.toLowerCase()
+    return text
+      .toLowerCase()
       .split('') // Розбиваємо рядок на символи
-      .map(char => translitMap[char] || char) // Заміщуємо символи за мапою
+      .map((char) => translitMap[char] || char) // Заміщуємо символи за мапою
       .join(''); // Збираємо назад в рядок
   }
-
 
   // Отримання даних карїни
   getCuisine(): void {
     this.cuisineService.getAll().subscribe((data: any) => {
       this.cuisineList = data;
-      this.cuisineList.sort((a, b) => a.cuisineName.localeCompare(b.cuisineName));
+      this.cuisineList.sort((a, b) =>
+        a.cuisineName.localeCompare(b.cuisineName)
+      );
     });
   }
 
@@ -300,26 +336,18 @@ export class AddRecipeComponent {
 
   //Фільтор регіонів
   filterContryRegion(data: any): void {
-    this.cuisineService
-      .getRegiopnByCusineID(data)
-      .subscribe((data: any) => {
-        this.regionFilter = [];
-        this.regionFilter = data;
-        this.regionFilter.sort((a, b) =>
-          a.regionName.localeCompare(b.regionName)
-        );
-
-
-      });
+    this.cuisineService.getRegiopnByCusineID(data).subscribe((data: any) => {
+      this.regionFilter = [];
+      this.regionFilter = data;
+      this.regionFilter.sort((a, b) =>
+        a.regionName.localeCompare(b.regionName)
+      );
+    });
   }
-
 
   /*  onRegionSelection() {
      const region = this.recipesForm.value.region;
    } */
-
-
-
 
   //Доодати інструменти
   getTools() {
@@ -365,16 +393,12 @@ export class AddRecipeComponent {
         this.recipesService
           .addRecipess(formData, slug)
           .then(() => console.log(`Документ створено з ID: ${slug}`))
-          .catch(err => console.error(err));
+          .catch((err) => console.error(err));
         this.exit();
       } else {
         alert('Slug не може бути порожнім!');
-
       }
     }
-
-
-
   }
 
   exit() {
@@ -387,7 +411,7 @@ export class AddRecipeComponent {
       categoriesDishes: recipe.categoriesDishes,
       recipeKeys: recipe.recipeKeys,
       cuisine: recipe.cuisine,
-      region: recipe.region,
+      region: recipe.region ?? null,
 
       autor: recipe.autor,
       methodCooking: recipe.methodCooking,
@@ -419,8 +443,12 @@ export class AddRecipeComponent {
       instructions: recipe.instructions,
       videoUrl: recipe.videoUrl,
       advice: recipe.advice,
-    });
 
+      adRecipeID: recipe.adRecipeID ?? null,
+      recipeName: recipe.recipeName ?? null,
+      articleID: recipe.articleID ?? null,
+      articleName: recipe.articleName ?? null,
+    });
 
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;
@@ -431,7 +459,6 @@ export class AddRecipeComponent {
     this.edit_status = true;
     this.recipeID = recipe.id;
   }
-
 
   // Відкриття модального вікна для додавання або редагування адреси
   addModal(action: string, object: any): void {
@@ -530,7 +557,6 @@ export class AddRecipeComponent {
             object,
             instructions: this.instructions,
           },
-
         });
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
@@ -570,14 +596,11 @@ export class AddRecipeComponent {
             object,
             ingredients: this.ingredients,
           },
-
-
         });
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
             this.ingredients = result.ingredients;
           }
-
         });
       } else {
         console.log('Виникла помилка! ');
@@ -585,17 +608,14 @@ export class AddRecipeComponent {
     }
   }
 
-
   // Завантаження зображення
   async uploadImage(event: any): Promise<void> {
     const file = event.target.files[0];
     const previousImageURL = this.mainImage; // Поточне зображення
     const task = ref(this.storsge, previousImageURL);
 
-    const category =
-      this.recipesForm.value.categoriesDishes.categoryName;
-    this.recipeCategoryName = this.convertToSlug(category)
-
+    const category = this.recipesForm.value.categoriesDishes.categoryName;
+    this.recipeCategoryName = this.convertToSlug(category);
 
     // Видалення попереднього зображення, якщо воно існує в Firebase Storage
     if (
@@ -609,7 +629,11 @@ export class AddRecipeComponent {
     }
 
     // Завантаження нового зображення
-    this.loadFile(`recipe-main-images/${this.recipeCategoryName}`, file.name, file)
+    this.loadFile(
+      `recipe-main-images/${this.recipeCategoryName}`,
+      file.name,
+      file
+    )
       .then((data) => {
         if (this.uploadPercent === 100) {
           this.recipesForm.patchValue({ mainImage: data });
@@ -647,22 +671,17 @@ export class AddRecipeComponent {
     return Promise.resolve(urlIcon);
   }
 
-
   compareFn(c1: DishesResponse, c2: DishesResponse): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
-
   test() {
-
     console.log(this.recipesForm.value);
   }
 
   openHome() {
     this.router.navigate(['/recipes']);
   }
-
-
 
   async slugValid(): Promise<void> {
     const trimmed = this.slug.trim();
@@ -671,7 +690,9 @@ export class AddRecipeComponent {
     const isValidSlug = /^[a-z0-9\-]+$/.test(trimmed);
 
     if (!isValidSlug) {
-      alert('❌ Слаг може містити лише латинські літери (a-z), цифри (0-9) та дефіси (-). Без пробілів, кирилиці або спецсимволів.');
+      alert(
+        '❌ Слаг може містити лише латинські літери (a-z), цифри (0-9) та дефіси (-). Без пробілів, кирилиці або спецсимволів.'
+      );
       this.slugExists = true;
       return;
     }
@@ -691,6 +712,45 @@ export class AddRecipeComponent {
     }
   }
 
+  //Пошук рецепта
+  onRecipeSearch(): void {
+    const query = this.recipesForm.get('recipeName')?.value || '';
 
+    if (query.length >= 3) {
+      this.recipesService.searchRecipes(query).subscribe((results) => {
+        this.allRecipes = results;
+        this.recipesResults = this.allRecipes;
+      });
+    } else {
+      this.recipesResults = [];
+    }
+  }
 
+  selectRecipe(recipeData: any) {
+    this.recipesForm.patchValue({
+      adRecipeID: recipeData.id ?? null,
+      recipeName: recipeData.recipeTitle ?? null,
+    });
+  }
+
+  //Пошук статті
+  onArticleSearch(): void {
+    const query = this.recipesForm.get('articleName')?.value || '';
+
+    if (query.length >= 3) {
+      this.articlePageService.searchArticles(query).subscribe((results) => {
+        this.allRecipes = results;
+        this.articlesResults = this.allRecipes;
+      });
+    } else {
+      this.articlesResults = [];
+    }
+  }
+
+  selectArticle(articleData: any) {
+    this.recipesForm.patchValue({
+      articleID: articleData.slug ?? null,
+      articleName: articleData.articleName ?? null,
+    });
+  }
 }

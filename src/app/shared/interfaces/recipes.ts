@@ -80,6 +80,11 @@ export interface RecipesRequest {
   seoName: string;
   seoDescription: string;
   seoImage: string;
+
+  adRecipeID: string;
+  recipeName: string;
+  articleID: string;
+  articleName: string;
 }
 export interface RecipesResponse extends RecipesRequest {
   id: number | string;
