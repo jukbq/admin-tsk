@@ -61,7 +61,8 @@
         <tr *ngFor="let products of filteredProducts; let i = index">
           <td>
             {{ i + 1 }}
-            <p *ngIf="products.id">+</p>
+            <p *ngIf="products.recipeID">+</p>
+            <p *ngIf="products.articleID">+</p>
           </td>
           <td>
             <p *ngIf="products.id">{{ products.id }}</p>

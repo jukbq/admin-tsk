@@ -109,10 +109,10 @@ export class AddProductComponent {
       productsImages: products.productsImages,
       recipeID: products.recipeID,
       recipeName: products.recipeName,
-      recipeImage: products.recipeImage,
-      articleID: products.articleID,
-      articleName: products.articleName,
-      articleImage: products.articleImage,
+      recipeImage: products.recipeImage ?? null,
+      articleID: products.articleID ?? null,
+      articleName: products.articleName ?? null,
+      articleImage: products.articleImage ?? null,
     });
 
     this.productsImages = products.productsImages;

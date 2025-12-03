@@ -79,6 +79,8 @@ export class ListProductsComponent {
     this.productsService.getAll().subscribe((data: any) => {
       this.products = data as ProductsResponse[];
       this.filteredProducts = [...this.products]; // Спочатку всі продукти
+      console.log(this.filteredProducts);
+      
 
 
     });
