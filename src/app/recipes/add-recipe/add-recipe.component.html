@@ -658,29 +658,7 @@
 
       <div class="add_additional_materials">
 
-         <!--Вибір рецепту-->
-        <div class="recipe_select">
-          <h2>Вибір статті</h2>
-          <input
-            formControlName="recipeName"
-            type="text"
-            (input)="onRecipeSearch()"
-            placeholder="Пошук рецептів..."
-            class="search-input" />
-          <ul *ngIf="recipesResults.length > 0" class="recipes_list">
-            @for (recipeList of recipesResults; track recipeList) {
-            <li class="recipe_card">
-              <div class="recipe_name">
-                <p (click)="selectRecipe(recipeList)">
-                  {{ recipeList.recipeTitle }}
-                </p>
-              </div>
-            </li>
-            }
-          </ul>
-        </div>
-
-        <!--Вибір статті-->
+          <!--Вибір статті-->
        <div class="article_select">
           <h2>Вибір статті</h2>
           <input

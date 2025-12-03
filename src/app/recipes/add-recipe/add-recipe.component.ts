@@ -207,10 +207,9 @@ export class AddRecipeComponent {
       comments: [null],
 
       //Додаткові матеріали
-      adRecipeID: [null],
-      recipeName: [null],
       articleID: [null],
       articleName: [null],
+      articleImage: [null],
     });
   }
 
@@ -444,10 +443,9 @@ export class AddRecipeComponent {
       videoUrl: recipe.videoUrl,
       advice: recipe.advice,
 
-      adRecipeID: recipe.adRecipeID ?? null,
-      recipeName: recipe.recipeName ?? null,
       articleID: recipe.articleID ?? null,
       articleName: recipe.articleName ?? null,
+      articleImage: recipe.articleImage ?? null,
     });
 
     this.ingredients = recipe.ingredients;
@@ -712,26 +710,7 @@ export class AddRecipeComponent {
     }
   }
 
-  //Пошук рецепта
-  onRecipeSearch(): void {
-    const query = this.recipesForm.get('recipeName')?.value || '';
 
-    if (query.length >= 3) {
-      this.recipesService.searchRecipes(query).subscribe((results) => {
-        this.allRecipes = results;
-        this.recipesResults = this.allRecipes;
-      });
-    } else {
-      this.recipesResults = [];
-    }
-  }
-
-  selectRecipe(recipeData: any) {
-    this.recipesForm.patchValue({
-      adRecipeID: recipeData.id ?? null,
-      recipeName: recipeData.recipeTitle ?? null,
-    });
-  }
 
   //Пошук статті
   onArticleSearch(): void {
@@ -751,6 +730,7 @@ export class AddRecipeComponent {
     this.recipesForm.patchValue({
       articleID: articleData.slug ?? null,
       articleName: articleData.articleName ?? null,
+      articleImage: articleData.mainImage ?? null,
     });
   }
 }

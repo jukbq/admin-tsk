@@ -81,10 +81,9 @@ export interface RecipesRequest {
   seoDescription: string;
   seoImage: string;
 
-  adRecipeID: string;
-  recipeName: string;
   articleID: string;
   articleName: string;
+  articleImage: string;
 }
 export interface RecipesResponse extends RecipesRequest {
   id: number | string;
