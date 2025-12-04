@@ -107,8 +107,8 @@ export class AddProductComponent {
       productsName: products.productsName,
       productsCalories: products.productsCalories,
       productsImages: products.productsImages,
-      recipeID: products.recipeID,
-      recipeName: products.recipeName,
+      recipeID: products.recipeID ?? null,
+      recipeName: products.recipeName ?? null,
       recipeImage: products.recipeImage ?? null,
       articleID: products.articleID ?? null,
       articleName: products.articleName ?? null,
@@ -132,7 +132,7 @@ export class AddProductComponent {
     this.productsForm.patchValue({
       articleID: articleData.slug,
       articleName: articleData.articleName,
-      articleImage: articleData.articleImage,
+      articleImage: articleData.mainImage,
     });
   }
 
@@ -163,12 +163,12 @@ export class AddProductComponent {
                     productsName: updatedProductData.productsName,
                     productsCalories: updatedProductData.productsCalories,
                     productsImages: updatedProductData.productsImages,
-                    recipeID: updatedProductData.recipeID,
-                    recipeName: updatedProductData.recipeName,
-                    recipeImage: updatedProductData.recipeImage,
-                    articleID: updatedProductData.articleID,
-                    articleName: updatedProductData.articleName,
-                    articleImage: updatedProductData.articleImage,
+                    recipeID: updatedProductData.recipeID ?? null,
+                    recipeName: updatedProductData.recipeName ?? null,
+                    recipeImage: updatedProductData.recipeImage ?? null,
+                    articleID: updatedProductData.articleID ?? null,
+                    articleName: updatedProductData.articleName ?? null,
+                    articleImage: updatedProductData.articleImage ?? null,
                   };
                 }
               });
