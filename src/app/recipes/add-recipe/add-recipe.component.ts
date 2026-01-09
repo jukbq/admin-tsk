@@ -149,7 +149,7 @@ export class AddRecipeComponent {
     this.getTools();
     this.getRecipeTyoe();
     this.getHolidays();
-    this.createdAt = new Date().toISOString().split('T')[0];
+   this.createdAt = Date.now();
 
     this.route.queryParams.subscribe((params) => {
       const action = params['action'];
@@ -434,7 +434,7 @@ export class AddRecipeComponent {
       ingredients: recipe.ingredients,
       numberServings: recipe.numberServings,
       numberCalories: recipe.numberCalories,
-      createdAt: recipe.createdAt,
+      createdAt: this.createdAt,
       holiday: recipe.holiday,
       completion: recipe.completion,
       recipeType: recipe.recipeType,

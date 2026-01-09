@@ -54,17 +54,18 @@ export class ArticleTypeService {
 
 
   editarticleType(articleType: ArticleTypeResponse, id: string) {
-    const articleTypeDocumentReference = doc(this.afs, `articleTyp/${id}`);
+    const articleTypeDocumentReference = doc(this.afs, `article-type/${id}`);
+     
     return updateDoc(articleTypeDocumentReference, { ...articleType });
   }
 
   delArticleTypeService(id: any) {
-    const articleTypeDocumentReference = doc(this.afs, `articleType/${id}`);
+    const articleTypeDocumentReference = doc(this.afs, `article-type/${id}`);
     return deleteDoc(articleTypeDocumentReference);
   }
 
   checkSlugExistsOnce(slug: string) {
-    const ref = doc(this.afs, `articleType/${slug}`);
+    const ref = doc(this.afs, `article-type/${slug}`);
     return getDoc(ref);
   }
 

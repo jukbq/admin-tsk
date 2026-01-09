@@ -44,7 +44,7 @@ export class AddArticleComponentsComponent {
 
   slug: string = '';
   slugExists: boolean | null = null;
-
+  createdAt: any = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -63,6 +63,7 @@ export class AddArticleComponentsComponent {
     this.initArticleCategoriesForm();
     this.getType();
     this.getCategories();
+         this.createdAt = new Date().toISOString().split('T')[0];
     if (this.data.action === 'edit') {
       this.editArticleCategories(this.data.object);
     }
@@ -83,8 +84,8 @@ export class AddArticleComponentsComponent {
       image: [null],
       additionalImage: [null],
       slug: [null],
-      numberСategories: [null]
-    });
+      numberСategories: [null],
+      });
   }
 
 
@@ -121,6 +122,7 @@ export class AddArticleComponentsComponent {
       keywords: categori.keywords,
       image: categori.image,
       additionalImage: categori.additionalImage,
+   
     });
 
     this.categoryImage = categori.image;
@@ -136,28 +138,14 @@ export class AddArticleComponentsComponent {
   // Додавання або редагування меню
   creatCategories() {
     const categoriesID = this.categoryID as string;
-    const formData = this.articleCategoriesForm.value
+    const formData = {
+     ...this.articleCategoriesForm.value,
+       createdAt: this.createdAt,
+    }
     const slug = this.slug;
 
     if (this.categories_edit_status) {
-      /*    this.recipeService.getRecipesByFilter({ categoriesID: categoriesID }).then((recipes: any[]) => {
-           // Перебираємо знайдені рецепти
-           recipes.forEach((recipe) => {
-             if (recipe && recipe.categoriesDishes) {
-               recipe.categoriesDishes = {
-                 ...recipe.categoriesDishes, // Зберігаємо всі старі дані
-                 categoryName: updatedCuisineData.categoryName,
-               };
-             }
-   
-             this.recipeService.editrecipes(recipe, recipe.id);
-   
-   
-           });
-         });
-    */
-
-      this.articleCategoryService
+            this.articleCategoryService
         .editArticleCategories(
           formData,
           categoriesID

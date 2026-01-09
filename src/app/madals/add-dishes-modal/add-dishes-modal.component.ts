@@ -50,6 +50,8 @@ export class AddDishesModalComponent {
   dishess_edit_status = false;
   uploadPercent!: number;
 
+  createdAt: any = '';
+
   slug: string = '';
   slugExists: boolean | null = null;
 
@@ -72,6 +74,7 @@ export class AddDishesModalComponent {
   ngOnInit(): void {
     this.initDishesForm();
     this.getDishes();
+     this.createdAt = new Date().toISOString().split('T')[0];
     if (this.data.action === 'edit') {
       this.editDishes(this.data.object);
     }
@@ -88,7 +91,8 @@ export class AddDishesModalComponent {
       keywords: [null],
       image: [null, Validators.required],
       additionalImage: [null],
-      numberСategories: [null]
+      numberСategories: [null],
+      createdAt: [null]
     });
   }
 
@@ -110,6 +114,7 @@ export class AddDishesModalComponent {
       seoDescription: dishes.seoDescription,
       image: dishes.image,
       additionalImage: dishes.additionalImage,
+       createdAt: this.createdAt,
     });
     this.dishesImage = dishes.image;
     this.additionalImage = dishes.additionalImage;
@@ -119,7 +124,10 @@ export class AddDishesModalComponent {
 
   // Додавання або редагування меню
   creatDishes() {
-    const formData = this.dishesForm.value;
+    const formData = {
+      ...this.dishesForm.value,
+       createdAt: this.createdAt,
+    }
     const slug = this.slug;
 
     if (this.dishess_edit_status) {

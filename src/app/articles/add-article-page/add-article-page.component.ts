@@ -1,7 +1,19 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Storage, deleteObject, getDownloadURL, percentage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import {
+  Storage,
+  deleteObject,
+  getDownloadURL,
+  percentage,
+  ref,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 import { CommonModule } from '@angular/common';
 import { ArticlePageService } from '../../shared/services/articles/article-page/article-page.service';
 import { ArticleTypeResponse } from '../../shared/interfaces/article-type';
@@ -21,10 +33,9 @@ import { ProductsResponse } from '../../shared/interfaces/products';
 @Component({
   selector: 'app-add-article-page',
   standalone: true,
-  imports: [CommonModule, FormsModule,
-    ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-article-page.component.html',
-  styleUrl: './add-article-page.component.scss'
+  styleUrl: './add-article-page.component.scss',
 })
 export class AddArticlePageComponent {
   slug: string = '';
@@ -46,8 +57,7 @@ export class AddArticlePageComponent {
   uploadPercent!: number;
   mainImage = '';
 
-
- /*  articlePageID = ''; */
+  createdAt: any = '';
 
   filteredProducts: any[] = [];
   products: any[] = [];
@@ -62,8 +72,8 @@ export class AddArticlePageComponent {
     private productCategoruService: ProductCategoryService,
     private productsService: ProductsService,
     private router: Router,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.initarticlePageForm();
@@ -77,14 +87,13 @@ export class AddArticlePageComponent {
       const action = params['action'];
       const object = params['object'] ? JSON.parse(params['object']) : null;
 
-
+      this.createdAt = new Date().toISOString().split('T')[0];
       if (action === 'edit' && object) {
         this.article_edit_status = true;
         this.editRecipe(object);
       }
     });
   }
-
 
   initarticlePageForm(): void {
     this.articlePageForm = this.formBuilder.group({
@@ -97,16 +106,16 @@ export class AddArticlePageComponent {
       seoDescription: [null],
       keywords: [null],
       articleContent: [null],
-    })
-
+    });
   }
-
 
   // Отримання страв  з сервера
   getType(): void {
     this.articleTypeService.getAllarticleTypeLieght().subscribe((data: any) => {
       this.articleType = data as ArticleTypeResponse[];
-      this.articleType.sort((a, b) => a.articleTypeName.localeCompare(b.articleTypeName));
+      this.articleType.sort((a, b) =>
+        a.articleTypeName.localeCompare(b.articleTypeName)
+      );
     });
   }
 
@@ -126,22 +135,19 @@ export class AddArticlePageComponent {
       a.aticleCategoryName.localeCompare(b.aticleCategoryName)
     );
     this.filter = true;
-
   }
 
   // Отримання категорій  з сервера
   getArticleCategories(): void {
-    this.articleCategoriesService.getAllArticleCategoryLight().subscribe((data: any) => {
-      this.articleCategories = data as ArticleCategoriesResponse[];
-      this.articleCategories.sort((a, b) =>
-        a.aticleCategoryName.localeCompare(b.aticleCategoryName)
-      );
-
-
-    });
+    this.articleCategoriesService
+      .getAllArticleCategoryLight()
+      .subscribe((data: any) => {
+        this.articleCategories = data as ArticleCategoriesResponse[];
+        this.articleCategories.sort((a, b) =>
+          a.aticleCategoryName.localeCompare(b.aticleCategoryName)
+        );
+      });
   }
-
-
 
   // Отримання категорії з сервера
   getProductCategories(): void {
@@ -150,11 +156,8 @@ export class AddArticlePageComponent {
       this.productsCategories.sort((a, b) =>
         a.productCategoryName.localeCompare(b.productCategoryName)
       );
-
-
     });
   }
-
 
   // Отримання продуктів з сервера
   getProducts(): void {
@@ -166,15 +169,11 @@ export class AddArticlePageComponent {
     });
   }
 
-
   onCategorySelectionChange(event: any): void {
     const typeID = event.target.value;
     this.filteredProducts = this.products.filter(
-      (product) =>
-        product.productsCategory.id ===
-        typeID
+      (product) => product.productsCategory.id === typeID
     );
-
   }
 
   async slugValid(): Promise<void> {
@@ -182,10 +181,10 @@ export class AddArticlePageComponent {
     const cleaned = this.slug
       .trim()
       .toLowerCase()
-      .replace(/\s+/g, '-')          // пробіли на дефіси
-      .replace(/[^a-z0-9\-]/g, '')   // все, що не латиниця/цифра/дефіс — геть
-      .replace(/--+/g, '-')          // кілька дефісів поспіль — в один
-      .replace(/^-+|-+$/g, '');      // дефіси на початку або в кінці — геть
+      .replace(/\s+/g, '-') // пробіли на дефіси
+      .replace(/[^a-z0-9\-]/g, '') // все, що не латиниця/цифра/дефіс — геть
+      .replace(/--+/g, '-') // кілька дефісів поспіль — в один
+      .replace(/^-+|-+$/g, ''); // дефіси на початку або в кінці — геть
 
     // 2. Якщо після очищення нічого не лишилось — фейл
     if (!cleaned) {
@@ -205,9 +204,6 @@ export class AddArticlePageComponent {
       slug: this.slug,
     });
 
-
-
-
     // 5. Повідомляємо результат
     if (this.slugExists) {
       window.alert('❌ Такий слаг вже існує. Вибери інший.');
@@ -216,27 +212,20 @@ export class AddArticlePageComponent {
     }
   }
 
-
-
   // Відкриття модального вікна для додавання або редагування адреси
   addModal(slug: string, object: any): void {
-   
-
- if (object === 'add') {
+    if (object === 'add') {
       const dialogRef = this.dialog.open(AddArticleOaragraphComponent, {
         hasBackdrop: true,
         panelClass: 'custom-dialog-container',
         data: { slug, object },
-
       });
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-
           this.articleContent = result.articleContent;
           this.articlePageForm.patchValue({
             articleContent: this.articleContent,
           });
-
         }
       });
     } else if (object === 'edit') {
@@ -248,14 +237,12 @@ export class AddArticlePageComponent {
           articleContent: this.articleContent || [],
           slug: slug,
         },
-           
       });
-       
+
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.articleContent = result.articleContent;
           console.log(this.articleContent);
-          
         }
       });
     } else {
@@ -266,13 +253,9 @@ export class AddArticlePageComponent {
         text: 'Не введено еічого!',
       });
     }
-
-
   }
 
   editRecipe(article: ArticlePAgesResponse) {
-   
-    
     this.articlePageForm.patchValue({
       slug: article.slug,
       articleCategory: article.articleCategory,
@@ -283,65 +266,55 @@ export class AddArticlePageComponent {
       seoDescription: article.seoDescription,
       keywords: article.keywords,
       articleContent: article.articleContent,
-
     });
 
-    this.slug = article.slug as string
-       
+    this.slug = article.slug as string;
+
     this.articleContent = article.articleContent;
 
     this.articleName = article.articleName;
     this.mainImage = article.mainImage;
-
   }
-
-
 
   // Додавання або редагування статті
   creatArticle() {
+   const formData = {
+      ...this.articlePageForm.value,
+      createdAt: this.createdAt,
+    };
+
 
     if (this.article_edit_status == true) {
+
       this.articlePageService
-        .editArticlePage(this.articlePageForm.value, this.slug)
+        .editArticlePage(formData, this.slug)
         .then(() => {
           this.close();
         });
     } else {
-      const formData = this.articlePageForm.value;
-      const slug = this.slug;
+          const slug = this.slug;
 
       if (slug !== '') {
         this.articlePageService
           .addArticlePage(formData, slug)
           .then(() => console.log(`Документ створено з ID: ${slug}`))
-          .catch(err => console.error(err));
+          .catch((err) => console.error(err));
         this.close();
       } else {
         alert('Slug не може бути порожнім!');
-
       }
     }
-
   }
-
-
-
-
 
   test() {
     console.log(this.articlePageForm.value);
   }
-
-
-
 
   // Завантаження зображення
   async uploadImage(event: any): Promise<void> {
     const file = event.target.files[0];
     const previousImageURL = this.mainImage; // Поточне зображення
     const task = ref(this.storsge, previousImageURL);
-
-
 
     // Видалення попереднього зображення, якщо воно існує в Firebase Storage
     if (
@@ -366,9 +339,6 @@ export class AddArticlePageComponent {
         console.error(err);
       });
   }
-
-
-
 
   // Завантаження файлу в хмарне сховище
   async loadFile(
@@ -401,11 +371,6 @@ export class AddArticlePageComponent {
   }
 
   close(): void {
-
     this.router.navigate(['/list-article-page']);
   }
-
-
-
-
 }

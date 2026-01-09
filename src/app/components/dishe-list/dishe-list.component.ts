@@ -26,6 +26,7 @@ export class DisheListComponent {
 
   ngOnInit(): void {
     this.getDishes();
+   
   }
 
   // Отримання даних з сервера
@@ -60,4 +61,7 @@ export class DisheListComponent {
       this.getDishes();
     });
   }
+
+
+
 }

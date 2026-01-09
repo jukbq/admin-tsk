@@ -33,6 +33,7 @@ export class AddArticleTypeComponent {
   slug: string = '';
   slugExists: boolean | null = null;
 
+  createdAt: any = '';
 
   constructor(
     private renderer: Renderer2,
@@ -49,9 +50,10 @@ export class AddArticleTypeComponent {
 
   ngOnInit(): void {
     this.initArticleTypeForm();
-    this.getArticleType();
-    if (this.data.action === 'edit') {
-      this.editArticleType(this.data.object);
+     this.getArticleType();
+     this.createdAt = new Date().toISOString().split('T')[0];
+     if (this.data.action === 'edit') {
+  this.editArticleType(this.data.object);
 
     }
   }
@@ -70,7 +72,7 @@ export class AddArticleTypeComponent {
       keywords: [null],
       image: [null],
       additionalImage: [null],
-      numberСategories: [null]
+      numberСategories: [null],
     });
   }
 
@@ -93,66 +95,32 @@ export class AddArticleTypeComponent {
       seoDescription: articleType.seoDescription,
       image: articleType.image,
       additionalImage: articleType.additionalImage,
+    
     });
+
     this.articleTypeImage = articleType.image;
     this.additionalImage = articleType.additionalImage;
     this.articleTypes_edit_status = true;
     this.articleTypeID = articleType.id;
+    
   }
 
 
   // Додавання або редагування меню
   creatArticleType() {
-    const formData = this.articleTypeForm.value;
+    const formData = {
+      ...this.articleTypeForm.value,
+      createdAt: this.createdAt,
+    };
     const slug = this.slug;
 
     if (this.articleTypes_edit_status) {
-      const articleTypeID = this.articleTypeID as string;
-      const updatedCuisineData = this.articleTypeForm.value
-      /*     this.recipeService.getRecipesByFilter({ dishesID: dishesID }).then((recipes: any[]) => {
-            // Перебираємо знайдені рецепти
-            recipes.forEach((recipe) => {
-              if (recipe && recipe.dishes) {
-                recipe.dishes = {
-                  ...recipe.dishes, // Зберігаємо всі старі дані
-                  dishesName: updatedCuisineData.dishesName,
-                };
-              }
-    
-              this.recipeService.editrecipes(recipe, recipe.id);
-    
-    
-            });
-          });
-    
-          this.categoryService.getCategoryByFilter(dishesID).then((category: any[]) => {
-            // Перебираємо знайдені рецепти
-            category.forEach((category) => {
-              if (category && category.dishes) {
-                category.dishes = {
-                  ...category.dishes, // Зберігаємо всі старі дані
-                  additionalImage: updatedCuisineData.additionalImage,
-                  dishDescription: updatedCuisineData.dishDescription,
-                  dishesName: updatedCuisineData.dishesName,
-                  dishesindex: updatedCuisineData.dishesindex,
-                  image: updatedCuisineData.image,
-                  keywords: updatedCuisineData.keywords,
-                  numberСategories: updatedCuisineData.numberСategories,
-                  seoName: updatedCuisineData.seoName,
-                };
-              }
-    
-    
-              this.categoryService.editCategories(category, category.categoryId);
-    
-    
-            });
-          }); */
-
+         const articleTypeID = this.articleTypeID as string
       this.articleTypeService.editarticleType(
         formData,
-        this.articleTypeID as string
+        articleTypeID
       );
+  
 
     } else {
       this.articleTypeService

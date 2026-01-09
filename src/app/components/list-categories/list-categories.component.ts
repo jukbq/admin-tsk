@@ -27,13 +27,31 @@ export class ListCategoriesComponent {
     private storsgeIcon: Storage,
     private dishesService: DishesService,
     private categoriesDishesService: CategoriesService,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getDishes();
     this.getCategories();
+/*     this.fixCreatedAtForDishes(); */
   }
+
+ /*  fixCreatedAtForDishes() {
+    const FIXED_DATE = '2025-05-01';
+
+    this.categoriesDishesService
+      .getAllCategoryLight()
+      .subscribe((dishes: any[]) => {
+        dishes.forEach((conp) => {
+          if (!conp.createdAt) {
+            this.categoriesDishesService.editCategories(
+              { createdAt: FIXED_DATE } as any,
+              conp.id
+            );
+          }
+        });
+      });
+  } */
 
   // Отримання страв  з сервера
   getDishes(): void {
@@ -59,9 +77,11 @@ export class ListCategoriesComponent {
         dishesid.includes(dish.dishes.id)
       );
 
-
       this.filterCategoriesDishes.sort((a, b) =>
         a.categoryName.localeCompare(b.categoryName)
+
+
+      
       );
       this.filter = true;
     }
@@ -72,7 +92,6 @@ export class ListCategoriesComponent {
     this.categoriesDishesService.getAll().subscribe((data: any) => {
       this.categoriesDishes = data as CategoriesResponse[];
 
-
       this.categoriesDishes.sort((a, b) =>
         a.categoryName.localeCompare(b.categoryName)
       );
@@ -81,9 +100,6 @@ export class ListCategoriesComponent {
 
   // Видалення категорію
   delCategori(index: CategoriesResponse) {
-
-
-
     if (index.image) {
       const task = ref(this.storsgeIcon, index.image);
       deleteObject(task).catch((error) => {
@@ -95,7 +111,6 @@ export class ListCategoriesComponent {
       this.getDishes();
     });
   }
-
 
   addModal(action: string, object: any): void {
     const dialogRef = this.dialog.open(AddCategoriesModalComponent, {

@@ -29,6 +29,8 @@ export class AddArticleOaragraphComponent {
   allRecipes: any[] = [];
   searchResults: any[] = [];
 
+ 
+
   constructor(
     private formBuilder: FormBuilder,
     private storsge: Storage,
@@ -46,6 +48,7 @@ export class AddArticleOaragraphComponent {
 
   ngOnInit(): void {
     this.initparagraphForm();
+   
     if (this.data.object === 'edit') {
       this.articleContent = this.data.articleContent;
       this.slug = this.data.slug;
@@ -63,6 +66,7 @@ export class AddArticleOaragraphComponent {
       recipeID: [null],
       recipeName: [null],
       mainImage: [null],
+    
     });
   }
 
@@ -76,6 +80,7 @@ export class AddArticleOaragraphComponent {
       const editedRecipeID = this.paragraphForm.value.recipeID;
       const editedRecipeName = this.paragraphForm.value.recipeName;
       const editedMainImage = this.paragraphForm.value.mainImage;
+    
 
       // Оновлення значень у відповідному об'єкті масиву instructions
       this.articleContent[this.pIndex].paragraphName = editedParagraphName;
@@ -85,6 +90,7 @@ export class AddArticleOaragraphComponent {
       this.articleContent[this.pIndex].recipeID = editedRecipeID;
       this.articleContent[this.pIndex].mainImage = editedMainImage;
       this.articleContent[this.pIndex].recipeName = editedRecipeName;
+   
 
       // Очищення даних у формах після редагування
       this.paragraphForm.reset();
@@ -98,6 +104,7 @@ export class AddArticleOaragraphComponent {
         recipeName: this.paragraphForm.value.recipeName,
         mainImage: this.paragraphForm.value.mainImage,
         paragraphImage: this.paragraphImage,
+   
       };
 
       this.articleContent.push(newParagraph);
@@ -124,7 +131,7 @@ export class AddArticleOaragraphComponent {
       recipeID: this.articleContent[i].recipeID || '',
       recipeName: this.articleContent[i].recipeName || '',
       mainImage: this.articleContent[i].mainImage || '',
-    });
+      });
   }
 
   //видалити крок

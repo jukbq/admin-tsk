@@ -50,6 +50,8 @@ export class AddCategoriesModalComponent {
   categoryImage: string | undefined;
   additionalImage: string | undefined;
 
+  createdAt: any = '';
+
   slug: string = '';
   slugExists: boolean | null = null;
 
@@ -63,15 +65,17 @@ export class AddCategoriesModalComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: { action: 'add' | 'edit'; object: any },
     private afs: Firestore
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initCategoriesDishesForm();
     this.getDishes();
     this.getCategories();
+    this.createdAt = new Date().toISOString().split('T')[0];
     if (this.data.action === 'edit') {
       this.editCategoriesDishes(this.data.object);
     }
+
     /*  this.categoryService.addPetitionField() */
   }
 
@@ -89,6 +93,7 @@ export class AddCategoriesModalComponent {
       keywords: [null],
       image: [null],
       additionalImage: [null],
+      createdAt: [null],
     });
   }
 
@@ -122,6 +127,7 @@ export class AddCategoriesModalComponent {
       keywords: categori.keywords,
       image: categori.image,
       additionalImage: categori.additionalImage,
+      createdAt: this.createdAt,
     });
 
     this.categoryImage = categori.image;
@@ -137,28 +143,35 @@ export class AddCategoriesModalComponent {
   // Додавання або редагування меню
   creatCategories() {
     const categoriesID = this.categoriesID as string;
-    const updatedCuisineData = this.categoriesDishesForm.value
+    const updatedCuisineData = this.categoriesDishesForm.value;
 
-    const formData = this.categoriesDishesForm.value;
+    
+
+
+    const formData = {
+  ...this.categoriesDishesForm.value,
+  createdAt: this.createdAt,
+};
     const slug = this.slug;
+ 
+
 
     if (this.categories_edit_status) {
-      this.recipeService.getRecipesByFilter({ categoriesID: categoriesID }).then((recipes: any[]) => {
-        // Перебираємо знайдені рецепти
-        recipes.forEach((recipe) => {
-          if (recipe && recipe.categoriesDishes) {
-            recipe.categoriesDishes = {
-              ...recipe.categoriesDishes, // Зберігаємо всі старі дані
-              categoryName: updatedCuisineData.categoryName,
-            };
-          }
+      this.recipeService
+        .getRecipesByFilter({ categoriesID: categoriesID })
+        .then((recipes: any[]) => {
+          // Перебираємо знайдені рецепти
+          recipes.forEach((recipe) => {
+            if (recipe && recipe.categoriesDishes) {
+              recipe.categoriesDishes = {
+                ...recipe.categoriesDishes, // Зберігаємо всі старі дані
+                categoryName: updatedCuisineData.categoryName,
+              };
+            }
 
-          this.recipeService.editrecipes(recipe, recipe.id);
-
-
+            this.recipeService.editrecipes(recipe, recipe.id);
+          });
         });
-      });
-
 
       this.categoryService
         .editCategories(
@@ -169,6 +182,7 @@ export class AddCategoriesModalComponent {
           this.dialogRef.close();
         });
     } else {
+         
       let currentCategoriesNumber =
         this.categoriesDishesForm.get('dishes')?.value?.numberСategories;
       if (
@@ -184,11 +198,10 @@ export class AddCategoriesModalComponent {
         });
       }
 
-
       this.categoryService
         .addCategories(formData, slug)
         .then(() => console.log(`Документ створено з ID: ${slug}`))
-        .catch(err => console.error(err));
+        .catch((err) => console.error(err));
 
       this.dialogRef.close();
     }
@@ -225,7 +238,10 @@ export class AddCategoriesModalComponent {
           console.error('Помилка при видаленні файлу:', error);
         }
       } else {
-        console.warn('Не вдалося отримати шлях до файлу з URL:', previousImageURL);
+        console.warn(
+          'Не вдалося отримати шлях до файлу з URL:',
+          previousImageURL
+        );
       }
     }
 
@@ -279,11 +295,9 @@ export class AddCategoriesModalComponent {
     return Promise.resolve(urlIcon);
   }
 
-
   close(): void {
     this.dialogRef.close();
   }
-
 
   //Перевірка slug
   async slugValid(): Promise<void> {
@@ -292,7 +306,9 @@ export class AddCategoriesModalComponent {
     // 🔴 Перевірка на наявність кирилиці
     const hasCyrillic = /[а-яіїєґА-ЯІЇЄҐ]/.test(trimmed);
     if (hasCyrillic) {
-      alert('❌ Слаг не має містити кирилицю. Використовуй тільки латиницю, цифри та дефіси.');
+      alert(
+        '❌ Слаг не має містити кирилицю. Використовуй тільки латиницю, цифри та дефіси.'
+      );
       this.slugExists = true; // можна показати, що невалідний
       return;
     }

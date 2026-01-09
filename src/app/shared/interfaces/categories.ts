@@ -15,6 +15,7 @@ export interface CategoriesRequest {
   keywords: string;
   image: string;
   additionalImage: string;
+  createdAt: string;
 }
 
 export interface CategoriesResponse extends CategoriesRequest {

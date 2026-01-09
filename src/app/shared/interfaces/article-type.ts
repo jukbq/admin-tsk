@@ -8,6 +8,7 @@ export interface ArticleTypeRequest {
     keywords: string;
     image: string;
     additionalImage: string;
+    createdAt: string;
     numberСategories: number;
 }
 export interface ArticleTypeResponse extends ArticleTypeRequest {

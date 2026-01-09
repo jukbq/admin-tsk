@@ -17,6 +17,7 @@ export class DishesService {
   getAll() {
     return collectionData(this.dishesCollection, { idField: 'id' });
   }
+  
 
   getAllDishesight() {
     return collectionData(this.dishesCollection, { idField: 'id' }).pipe(
