@@ -242,8 +242,7 @@ export class AddArticlePageComponent {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.articleContent = result.articleContent;
-          console.log(this.articleContent);
-        }
+            }
       });
     } else {
       console.log('Виникла помилка! ');
@@ -281,6 +280,7 @@ export class AddArticlePageComponent {
    const formData = {
       ...this.articlePageForm.value,
       createdAt: this.createdAt,
+          
     };
 
 
